@@ -11,8 +11,8 @@
 	<groupId>com.revature</groupId>
 	<artifactId>dartcart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Dart Cart</name>
-	<description>Demo project for Spring Boot</description>
+	<name>DartCart</name>
+	<description>A full stack ecommerce web application.</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
