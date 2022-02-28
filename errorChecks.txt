@@ -1,0 +1,36 @@
+const [error, setError] = useState("");
+	const errorHandle = async () => {
+		if (username === "") {
+			setError("No username");
+            	setInvalidInput(true);
+		} else if (password === "") {
+			setError("No password")
+            	setInvalidInput(true);
+		} else if (password !== repassword) {
+            	setError("Non-matching password")
+            	setInvalidInput(true);
+		} else if (repassword === "") {
+			setError("No password confirmation")
+			set InvalidInput(true);
+		} else if (firstName === "") {
+			setError("No first name")
+			set InvalidInput(true);
+		} else if (lastName === "") {
+			setError("No last name")
+			set InvalidInput(true);
+		} else if (email === "") {
+			setError("No email")
+			set InvalidInput(true);
+		} else if (phone === "") {
+			setError("No phone")
+			set InvalidInput(true);
+		} else if (location === "") {
+			setError("No address")
+			set InvalidInput(true);
+		} else if (!email.includes("@") || !email.includes(".")) {
+			setError("Invalid email")
+			set InvalidInput(true);
+		} else if (!string.replace(/\D/g, '').length !== 10)
+			setError("Invalid phone");
+			set InvalidInput(true);
+        } else {
