@@ -16,7 +16,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.web.servlet.MockMvc;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,6 @@ public class TestJwtFilter {
 	
 	@MockBean private static JwtTokenUtil jwtTokenUtil;
 	@MockBean private static UserRepo userRepo;
-	//@Autowired private MockMvc mockMvc;
 	
 	@BeforeAll
 	static void testSetup(@Autowired ApplicationContext app) {
@@ -52,7 +50,6 @@ public class TestJwtFilter {
 	
 	@Test
 	void tokenDNE() throws InvocationTargetException, IllegalAccessException {
-		// MockServletContext servletContext = new MockServletContext();
 		
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
