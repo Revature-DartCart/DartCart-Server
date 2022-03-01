@@ -1,4 +1,4 @@
-package com.revature.filters;
+package com.revature.utilities;
 
 import com.revature.app.DartCartApplication;
 import com.revature.models.User;

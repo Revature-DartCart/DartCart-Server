@@ -1,12 +1,15 @@
 package com.revature.utilities;
 
 import com.revature.app.DartCartApplication;
+import com.revature.repositories.UserRepo;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -96,5 +99,10 @@ public class JwtTokenUtilTest {
     void validate_happy() throws InvocationTargetException, IllegalAccessException {
         boolean retVal = (Boolean) validate.invoke(tokenUtility, "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0aW5ndXNlcnBsZWFzZWlnbm9yZSIsImlzcyI6ImxvY2FsaG9zdCIsImlhdCI6MTY0NTgyMjE4MSwiZXhwIjoxNjQ2OTE2MTg2fQ.m40zqnRVkMAvCsDLorhaTkY-vkVq64Ybfs-3zSjv8E3w68CGc9pBgj-F6NhbhWdnI0waKLCiux0I13CYTUKxXA");
         assertTrue(retVal);
+    }
+
+    @Test
+    void checkUserName() throws InvocationTargetException, IllegalAccessException {
+
     }
 }
