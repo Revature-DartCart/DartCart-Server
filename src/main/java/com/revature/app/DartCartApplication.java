@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.revature.repositories")
 public class DartCartApplication {
 
-	static ApplicationContext app;
+	public static ApplicationContext app;
 
 	public static void main(String[] args) {
 		app = SpringApplication.run(DartCartApplication.class, args);

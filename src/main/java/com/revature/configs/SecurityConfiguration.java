@@ -24,10 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthService authService;
 
-    private final JwtTokenFilter jwtTokenFilter;
-    public SecurityConfiguration(JwtTokenFilter jwtTokenFilter) {
-        this.jwtTokenFilter = jwtTokenFilter;
-    }
+    @Autowired
+    private JwtTokenFilter jwtTokenFilter;
 
     /**
      * Configures the authentication manager with the correct provider

@@ -4,17 +4,21 @@ import com.revature.app.DartCartApplication;
 import com.revature.repositories.UserRepo;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpHeaders;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = DartCartApplication.class)
@@ -28,10 +32,16 @@ public class JwtTokenUtilTest {
     private static final String GENERATE = "generateAccessToken";
     // object of the class
     private static Object tokenUtility;
+
     // the validate function we are testing
     private static Method validate;
     // the generate function we are testing
     private static Method generate;
+
+    // Method name of the GETUSERNAME function
+    private static final String GETUSERNAME = "getUsername";
+    // the getUserName function we are testing
+    private static Method getUsername;
 
     @Autowired
     private ApplicationContext app;
@@ -40,9 +50,10 @@ public class JwtTokenUtilTest {
      * Tests the validation of JWTTokens
      */
     @BeforeAll
-    static void testingSetup(@Autowired ApplicationContext app) {
+    static void testingSetup(@Autowired ApplicationContext app) throws NoSuchMethodException {
         try {
             tokenUtility = app.getBean(Class.forName(CLASSNAME));
+
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Class: " + CLASSNAME + " needs to be implemented", e);
         }
@@ -50,6 +61,8 @@ public class JwtTokenUtilTest {
         // get the validate method from the object
         try {
             validate = tokenUtility.getClass().getMethod(VALIDATE, String.class);
+            getUsername = tokenUtility.getClass().getMethod(GETUSERNAME,String.class);
+
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("Method: " + VALIDATE + " needs to be implemented", e);
         }
@@ -103,6 +116,10 @@ public class JwtTokenUtilTest {
 
     @Test
     void checkUserName() throws InvocationTargetException, IllegalAccessException {
+        User anyUser = new User("username", "password", new ArrayList<>());
+        String token = (String) generate.invoke(tokenUtility, anyUser);
+        String userVal = (String) getUsername.invoke(tokenUtility, token);
 
+        assertEquals(userVal,"username");
     }
 }

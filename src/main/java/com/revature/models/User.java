@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import com.revature.app.DartCartApplication;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,4 @@ public class User {
 
     @Column(name = "registration_date")
     private long registrationDate;
-
 }
