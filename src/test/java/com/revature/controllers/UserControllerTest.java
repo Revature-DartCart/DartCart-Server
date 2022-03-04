@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -42,8 +41,8 @@ class UserControllerTest {
     @MockBean
     private UserService mockUserService;
 
-    @Mock
-    private CheckoutService checkoutService;
+    @MockBean
+    private CheckoutService mockCheckoutService;
 
     final private User mockUser = new User(
             1,
@@ -94,8 +93,7 @@ class UserControllerTest {
     @Test
     @WithMockUser("spring")
     public void testUserCheckoutWithValidCart() throws Exception {
-        List<CartItem> cart = new ArrayList<>();
-        User userIn = new User(
+        User user = new User(
                 mockUser.getId(),
                 mockUser.getUsername(),
                 mockUser.getPassword(),
@@ -108,7 +106,7 @@ class UserControllerTest {
                 new ArrayList<>()
         );
 
-        when(checkoutService.checkout(userIn)).thenReturn(userIn);
+        when(mockCheckoutService.checkout(Mockito.any(user.getClass()))).thenReturn(user);
         mvc.perform(
                 MockMvcRequestBuilders.post("/checkout")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -122,7 +120,24 @@ class UserControllerTest {
     @Test
     @WithMockUser("spring")
     public void testUserCheckoutWithInvalidCart() throws Exception {
-        when(checkoutService.checkout(mockUser)).thenReturn(mockUser);
+        User user = new User(
+                mockUser.getId(),
+                mockUser.getUsername(),
+                mockUser.getPassword(),
+                mockUser.getFirstName(),
+                mockUser.getLastName(),
+                mockUser.getEmail(),
+                mockUser.getPhone(),
+                mockUser.getLocation(),
+                mockUser.getRegistrationDate(),
+                new ArrayList<>()
+        );
+
+        user.getItemList().add(new CartItem(
+                1, 3, false, user, new ShopProduct(
+                1, 5, 100, 100, null, null)));
+
+        when(mockCheckoutService.checkout(Mockito.any(User.class))).thenReturn(user);
         mvc.perform(
                 MockMvcRequestBuilders.post("/checkout")
                         .contentType(MediaType.APPLICATION_JSON)
