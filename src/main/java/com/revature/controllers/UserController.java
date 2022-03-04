@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.models.User;
+import com.revature.services.CheckoutService;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,9 @@ public class UserController {
     @Autowired
     UserService us;
 
+    @Autowired
+    private CheckoutService checkoutService;
+
     // Return JWT for automatic login after registration
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> newUser(@RequestBody User u) {
@@ -42,6 +46,14 @@ public class UserController {
     // or return one with items in cart if there was a mismatch
     @PostMapping(value = "/checkout")
     public ResponseEntity<User> checkout(@RequestBody User user) {
-        return null;
+        user = checkoutService.checkout(user);
+
+        // if cart is empty checkout succeeded
+        // otherwise we return a 400 with the correct cart
+        if(user.getItemList().size() == 0) {
+            return ResponseEntity.of(Optional.of(user));
+        } else {
+            return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+        }
     }
 }
