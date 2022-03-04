@@ -35,4 +35,11 @@ public class UserController {
         }
     }
 
+    // Take in user with cartitems list filled and give it to the checkout
+    // service. Return a user with an empty cart if checkout completed
+    // or return one with items in cart if there was a mismatch
+    @PostMapping(value = "/checkout")
+    public ResponseEntity<User> checkout(@RequestBody User user) {
+        return null;
+    }
 }

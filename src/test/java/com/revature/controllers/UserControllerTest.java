@@ -67,4 +67,12 @@ class UserControllerTest {
                 andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
+    @Test
+    public void testUnauthorizedUser() {}
+
+    @Test
+    public void testUserCheckoutWithValidCart() {}
+
+    @Test
+    public void testUserCheckoutWithInvalidCart() {}
 }
