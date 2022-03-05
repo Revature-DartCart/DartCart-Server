@@ -27,9 +27,10 @@ public class CartItem {
     private boolean saved;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "user_id")
     private User customer;
 
     @OneToOne
+    @JoinColumn(name = "shop_product_id")
     private ShopProduct shopProduct;
 }
