@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
@@ -144,5 +145,44 @@ public class CheckoutServiceTest {
         User u = checkoutService.checkout(user);
 
         assertEquals(user, u);
+    }
+
+    @Test
+    public void testBadTransaction() {
+        User user = new User(
+                1,
+                "test1",
+                "password",
+                "Test",
+                "User",
+                "test1@dartcart.net",
+                "123-456-7890",
+                "1 Test Street, Test Town, Testonia 12345",
+                123563672L,
+                new ArrayList<>()
+        );
+
+        Shop shop = new Shop(1, "blah", null);
+        Product product = new Product(1, "test product", "test description", null);
+        Product product2 = new Product(2, "test2 product", "test2 description", null);
+        ShopProduct shopProduct = new ShopProduct(1, 5, 100, 100, shop, product);
+        ShopProduct shopProduct2 = new ShopProduct(2, 5, 100, 100, shop, product2);
+
+        // add items to cart
+        CartItem cartItem = new CartItem(1, 300, false, user, shopProduct);
+        CartItem cartItem2 = new CartItem(1, 3, false, user, shopProduct2);
+        user.getItemList().add(cartItem);
+        user.getItemList().add(cartItem2);
+
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        orderDetails.add(new OrderDetail(1, 100, "test product", "test description", 3));
+        orderDetails.add(new OrderDetail(1, 100, "test2 product", "test2 description", 3));
+        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, shop, orderDetails);
+
+        // get current cart for confirmation
+        when(userRepo.findById(user.getId())).thenReturn(Optional.of(user));
+        when(invoiceRepository.save(Mockito.any(Invoice.class))).thenReturn(invoice);
+
+        assertThrows(BadTransactionException.class, () -> checkoutService.checkout(user));
     }
 }
