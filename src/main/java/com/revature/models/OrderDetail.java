@@ -31,4 +31,6 @@ public class OrderDetail {
     @Column(length = 1000, updatable = false)
     private String description;
 
+    private int quantity;
+
 }
