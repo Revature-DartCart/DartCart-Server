@@ -1,6 +1,7 @@
 package com.revature.integration.services;
 
 import com.revature.driver.DartCartApplication;
+import com.revature.exceptions.BadTransactionException;
 import com.revature.models.*;
 import com.revature.services.CheckoutService;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,7 +89,7 @@ public class CheckoutServiceIntegrationTests {
     }
 
     @Test
-    public void testUserCheckoutWithValidCart() {
+    public void testUserCheckoutWithValidCart() throws BadTransactionException {
         CartItem cartKellogs = new CartItem(1, 1, false, user, shopKellogs);
         CartItem cartLaptop = new CartItem(2, 1, false, user, shopLaptop);
         user.getItemList().add(cartKellogs);
@@ -100,7 +101,7 @@ public class CheckoutServiceIntegrationTests {
     }
 
     @Test
-    public void testUserCheckoutWithInvalidCart() {
+    public void testUserCheckoutWithInvalidCart() throws BadTransactionException {
         CartItem cartKellogs = new CartItem(1, 1, false, user, shopKellogs);
         user.getItemList().add(cartKellogs);
 

@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.exceptions.BadTransactionException;
 import com.revature.models.User;
 import com.revature.services.CheckoutService;
 import com.revature.services.UserService;
@@ -46,7 +47,11 @@ public class UserController {
     // or return one with items in cart if there was a mismatch
     @PostMapping(value = "/checkout")
     public ResponseEntity<User> checkout(@RequestBody User user) {
-        user = checkoutService.checkout(user);
+        try {
+            user = checkoutService.checkout(user);
+        } catch (BadTransactionException e) {
+            return new ResponseEntity<>(user, HttpStatus.NOT_ACCEPTABLE);
+        }
 
         // if cart is empty checkout succeeded
         // otherwise we return a 400 with the correct cart

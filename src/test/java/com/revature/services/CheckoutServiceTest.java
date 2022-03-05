@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import com.revature.driver.DartCartApplication;
+import com.revature.exceptions.BadTransactionException;
 import com.revature.models.*;
 import com.revature.repositories.CartItemRepository;
 import com.revature.repositories.InvoiceRepository;
@@ -35,7 +36,7 @@ public class CheckoutServiceTest {
     private CartItemRepository cartItemRepository;
 
     @Test
-    public void testUserCheckoutWithValidCart() {
+    public void testUserCheckoutWithValidCart() throws BadTransactionException {
         User user = new User(
                 1,
                 "test1",
@@ -79,7 +80,7 @@ public class CheckoutServiceTest {
     }
 
     @Test
-    public void testUserCheckoutWithInvalidCart() {
+    public void testUserCheckoutWithInvalidCart() throws BadTransactionException {
         User user = new User(
                 1,
                 "test1",
@@ -124,7 +125,7 @@ public class CheckoutServiceTest {
     }
 
     @Test
-    public void testMissingUser() {
+    public void testMissingUser() throws BadTransactionException {
         User user = new User(
                 1,
                 "test1",
