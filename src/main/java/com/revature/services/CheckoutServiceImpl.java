@@ -1,11 +1,10 @@
 package com.revature.services;
 
-import com.revature.models.CartItem;
-import com.revature.models.Invoice;
-import com.revature.models.OrderDetail;
-import com.revature.models.User;
+import com.revature.exceptions.BadTransactionException;
+import com.revature.models.*;
 import com.revature.repositories.CartItemRepository;
 import com.revature.repositories.InvoiceRepository;
+import com.revature.repositories.ShopProductRepo;
 import com.revature.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,23 +19,29 @@ public class CheckoutServiceImpl implements CheckoutService {
     private UserRepo userRepo;
 
     @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private ShopProductRepo shopProductRepo;
+
 
     /**
      * This method receives a User with a full cart of items and compares
      * that cart with the ones saved in the database. If there is a mismatch,
      * we return the User with the saved cart to the frontend. If there is not
      * a mismatch, we perform the checkout process (create an invoice, empty cart).
+     * This is transactional, so if something goes wrong we can rollback any database
+     * changes.
      *
      * @param user        The user who is checking out
      * @return            User object that has a corrected cart
      */
     @Override
     @Transactional
-    public User checkout(User user) {
+    public User checkout(User user) throws BadTransactionException {
         Optional<User> op = userRepo.findById(user.getId());
 
         if(op.isPresent()) {
@@ -54,7 +59,15 @@ public class CheckoutServiceImpl implements CheckoutService {
                     // build a map of shop ids to an invoice
                     // so each shop has an invoice for an order
                     Map<Integer, Invoice> invoiceMap = new HashMap<>();
+
+                    // This map is used to keep track of updating the quantities in shopproduct
+                    Map<Integer, Integer> shopProductModifications = new HashMap<>();
                     for (CartItem item: fetchedUser.getItemList()) {
+                        // If we try to purchase more than what's in stock we throw an exception
+                        if(item.getQuantity() > item.getShopProduct().getQuantity()) {
+                            throw new BadTransactionException();
+                        }
+
                         int shopId = item.getShopProduct().getShop().getId();
 
                         if(!invoiceMap.containsKey(shopId)) {
@@ -73,6 +86,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                             orderDetail.setDescription(item.getShopProduct().getProduct().getName());
                             orderDetail.setQuantity(item.getQuantity());
                             orderDetail.setCost(item.getShopProduct().getPrice());
+                            shopProductModifications.put(item.getShopProduct().getId(), item.getQuantity());
 
                             invoice.getOrderDetails().add(orderDetail);
 
@@ -84,14 +98,21 @@ public class CheckoutServiceImpl implements CheckoutService {
                             orderDetail.setDescription(item.getShopProduct().getProduct().getName());
                             orderDetail.setQuantity(item.getQuantity());
                             orderDetail.setCost(item.getShopProduct().getPrice());
+                            shopProductModifications.put(item.getShopProduct().getId(), item.getQuantity());
 
                             invoiceMap.get(shopId).getOrderDetails().add(orderDetail);
                         }
                     }
 
-                    for(Invoice invoice: invoiceMap.values()) {
-                        invoiceRepository.save(invoice);
-                    }
+                    // Here we save the invoices
+                    invoiceMap.values().forEach(invoice -> invoiceRepository.save(invoice));
+
+                    // Update quantity on each shopproduct
+                    List<ShopProduct> products = (List<ShopProduct>) shopProductRepo.findAllById(shopProductModifications.keySet());
+                    products.forEach(shopProduct -> {
+                        shopProduct.setQuantity(shopProduct.getQuantity() - shopProductModifications.get(shopProduct.getId()));
+                    });
+                    shopProductRepo.saveAll(products);
 
                     cartItemRepository.deleteAll();
 
