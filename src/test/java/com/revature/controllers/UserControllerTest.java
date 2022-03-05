@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.driver.DartCartApplication;
+import com.revature.exceptions.BadTransactionException;
 import com.revature.models.CartItem;
 import com.revature.models.Shop;
 import com.revature.models.ShopProduct;
@@ -145,6 +146,19 @@ class UserControllerTest {
                 .andExpectAll(
                         MockMvcResultMatchers.status().isBadRequest(),
                         MockMvcResultMatchers.jsonPath("$.id").value(1)
+                );
+    }
+
+    @Test
+    @WithMockUser("spring")
+    public void testUserWithInvalidQuantity() throws Exception {
+        when(mockCheckoutService.checkout(Mockito.any(User.class))).thenThrow(BadTransactionException.class);
+        mvc.perform(
+                        MockMvcRequestBuilders.post("/checkout")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(mockUser)))
+                .andExpectAll(
+                        MockMvcResultMatchers.status().isNotAcceptable()
                 );
     }
 }
