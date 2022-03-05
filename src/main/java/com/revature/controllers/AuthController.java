@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.services.AuthService;
+import com.revature.services.UserService;
 import com.revature.utilities.JwtTokenUtil;
 import com.revature.models.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,22 @@ import org.springframework.security.core.Authentication;
 @RestController
 @CrossOrigin
 public class AuthController {
+
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    AuthService authService;
+
+
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody UserLogin request) {
+    public ResponseEntity<com.revature.models.User> login(@RequestBody UserLogin request) {
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(
@@ -35,16 +44,20 @@ public class AuthController {
                                     request.getUsername(), request.getPassword()
                             )
                     );
+
             User user = (User) authenticate.getPrincipal();
+            com.revature.models.User retUser = userService.getUserByUsername(user.getUsername());
+            retUser.setPassword(null);
+
             return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,
                             jwtTokenUtil.generateAccessToken(user)
                     )
-                    .body(user);
+                    .body(retUser);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
     }
 }
+

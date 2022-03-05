@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.revature.driver.DartCartApplication;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,28 +29,29 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(unique = true, nullable = false)
+    @NotNull
+    @Column(unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @NotNull
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
     private String firstName;
 
-    @Column(nullable = false)
+    @NotNull
     private String lastName;
 
-    @Column(nullable = false)
+    @NotNull
     private String email;
 
-    @Column(nullable = false)
+    @NotNull
     private String phone;
 
-    @Column(nullable = false)
+    @NotNull
     private String location;
 
-    @Column(nullable = false)
+    @NotNull
     private long registrationDate;
 
     // Returns items in both cart and wishlist

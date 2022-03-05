@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "Sellers")
-public class Seller {
+public class  Seller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seller_id")
     private int id;
 
+    @NotNull
+    private String name;
+
+    @NotNull
+    @Column(unique = true)
     private String homepage;
 
     private String description;

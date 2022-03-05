@@ -11,4 +11,5 @@ import java.util.List;
 public interface ShopProductRepo extends CrudRepository<ShopProduct, Integer> {
 
     List<ShopProduct> findByProduct(Product product);
+
 }

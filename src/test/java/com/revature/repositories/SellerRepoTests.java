@@ -43,6 +43,7 @@ public class SellerRepoTests {
 
     final private Seller mockSeller = new Seller(
             1,
+            "New Seller",
             "/newseller",
             "THE BEST NEW SELLER!!!",
             mockUser
@@ -77,6 +78,7 @@ public class SellerRepoTests {
     public void givenSellerId_whenSave_thenUpdateSeller() {
         Seller testSeller = new Seller(
                 1,
+                "New Seller",
                 "/newseller",
                 "THE SUPER DUPER BEST NEW SELLER!!!",
                 mockUser

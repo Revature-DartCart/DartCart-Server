@@ -24,4 +24,11 @@ public interface ShopProductService {
     Optional<ShopProduct> getShopProductById(int id);
 
     List<ShopProductResponse> getSellersForProduct(int id);
+
+    /**
+     * This function retrieves all Shop Products with the search string in their name
+     * @param searchString The string to be searched
+     * @return A list of all Sop Products that contain the search string in their name
+     */
+    List<ShopProduct> searchByProductName(String searchString);
 }

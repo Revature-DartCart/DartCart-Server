@@ -111,4 +111,17 @@ public class ShopProductControllersTests {
         ra.andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(testShopProduct2));
         ra.andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(testShopProduct3));
     }
+
+    @Test
+    void searchShopProduct() throws Exception {
+        List<ShopProduct> testList = new ArrayList<>();
+        testList.add(testShopProduct);
+        testList.add(testShopProduct2);
+        testList.add(testShopProduct3);
+
+        Mockito.when(sps.searchByProductName("Product2")).thenReturn(testList);
+        ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.get("/shop_products/search/Product2"));
+        resultActions.andExpectAll((MockMvcResultMatchers.jsonPath("$[1]").value(testShopProduct2)),
+                (MockMvcResultMatchers.status().isOk()));
+    }
 }

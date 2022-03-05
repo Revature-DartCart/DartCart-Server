@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
-import com.revature.models.User;
-import com.revature.services.UserService;
+import com.revature.models.Shop;
+import com.revature.services.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -13,19 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-public class UserController {
+public class ShopController {
 
     @Autowired
-    UserService userService;
+    ShopService shopService;
 
-    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<User> newUser(@RequestBody User u) {
+    @PostMapping(value = "/signup", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Shop> newShop(@RequestBody Shop s) {
         try {
-            User created = userService.addUser(u);
+            Shop created = shopService.addShop(s);
+
             if (created.getId() != 0) {
                 return new ResponseEntity<>(created, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
             }
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

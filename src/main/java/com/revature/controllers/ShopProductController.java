@@ -26,6 +26,7 @@ public class ShopProductController {
     public ResponseEntity<ShopProduct> getShopProductByShopId(@PathVariable ("id") String id) {
         Optional<ShopProduct> sp = sps.getShopProductById(Integer.parseInt(id));
         return ResponseEntity.of(sp);
+
     }
 
     @GetMapping("/shop_products")
@@ -38,5 +39,10 @@ public class ShopProductController {
     {
         List<ShopProductResponse> shops = sps.getSellersForProduct(Integer.parseInt(id));
         return new ResponseEntity<>(shops, HttpStatus.OK);
+    }
+
+    @GetMapping("/shop_products/search/{search}")
+    public List<ShopProduct> searchShopProducts(@PathVariable ("search") String search){
+        return sps.searchByProductName(search);
     }
 }

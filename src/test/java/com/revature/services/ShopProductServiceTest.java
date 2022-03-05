@@ -26,6 +26,7 @@ public class ShopProductServiceTest
                 1,
                 "test.com",
                 "desc",
+                null,
                 null
         );
         final private Product mockProduct = new Product(

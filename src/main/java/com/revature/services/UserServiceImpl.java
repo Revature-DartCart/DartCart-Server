@@ -10,10 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService
-{
+public class UserServiceImpl implements UserService {
     @Autowired
-    UserRepo ur;
+    UserRepo userRepo;
 
     @Autowired
     BCryptPasswordEncoder bCryptEncoder;
@@ -21,28 +20,28 @@ public class UserServiceImpl implements UserService
     public User addUser(User user)
     {
         user.setPassword(bCryptEncoder.encode(user.getPassword()));
-        return ur.save(user);
+        return userRepo.save(user);
     }
 
     @Override
     public Optional<User> getUserById(int id) {
-        return ur.findById(id);
+        return userRepo.findById(id);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>) ur.findAll();
+        return (List<User>) userRepo.findAll();
     }
 
     @Override
     public void updateUser(User change) {
-        ur.save(change);
+        userRepo.save(change);
     }
 
     @Override
     public boolean deleteUser(int id) {
         try {
-            ur.deleteById(id);
+            userRepo.deleteById(id);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService
 
     @Override
     public User getUserByUsername(String username) {
-        return ur.findByUsername(username);
+        return userRepo.findByUsername(username);
     }
 
 }

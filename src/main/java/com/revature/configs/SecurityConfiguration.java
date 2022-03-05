@@ -64,12 +64,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and();
 
         // Set permissions on endpoints
-//        http.authorizeRequests()
-//                // Our public endpoints
-//                .antMatchers("/login", "/h2", "/register","/sellers/{id}").permitAll();
+        http.authorizeRequests()
+                // Our public endpoints
+                .antMatchers("/h2/**", "/login", "/register", "/signup", "/signup/shop", "/shop_products").permitAll()
                 // Our private endpoints
-//                .antMatchers("/actuator/**").hasRole(Role.ADMIN.toString())
-//                .anyRequest().authenticated();
+                .antMatchers("/actuator/**").hasRole(Role.ADMIN.toString())
+                .anyRequest().authenticated();
 
         // Add JWT token filter
         http.addFilterBefore(
@@ -77,6 +77,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 UsernamePasswordAuthenticationFilter.class
         );
 
+        // Enable iframe rendering for H2 console
+        http.headers().frameOptions().sameOrigin();
 
     }
 
