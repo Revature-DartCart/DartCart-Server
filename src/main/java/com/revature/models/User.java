@@ -1,7 +1,5 @@
 package com.revature.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.revature.driver.DartCartApplication;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -56,6 +54,5 @@ public class User {
     // Returns items in both cart and wishlist
     // Filter by CartItem's saved field to separate the lists
     @OneToMany(mappedBy = "customer")
-    @JsonIgnore
     private List<CartItem> itemList;
 }
