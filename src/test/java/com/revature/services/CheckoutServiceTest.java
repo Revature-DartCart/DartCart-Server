@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.parameters.P;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +108,8 @@ public class CheckoutServiceTest {
         );
 
         Shop shop = new Shop(1, "blah", null);
-        Product product = new Product(1, "test product", "test description", null);
+        Product product = new Product(1, "test product", "test description", new ArrayList<>());
+        product.getCategories().add(new Category(1, "Food"));
         ShopProduct shopProduct = new ShopProduct(1, 5, 100, 100, shop, product);
 
         // add items to cart
