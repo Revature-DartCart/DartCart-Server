@@ -4,14 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.driver.DartCartApplication;
 import com.revature.exceptions.BadTransactionException;
 import com.revature.models.CartItem;
-import com.revature.models.Shop;
 import com.revature.models.ShopProduct;
 import com.revature.models.User;
 import com.revature.services.CheckoutService;
 import com.revature.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -108,6 +106,7 @@ class UserControllerTest {
         );
 
         when(mockCheckoutService.checkout(Mockito.any(user.getClass()))).thenReturn(user);
+
         mvc.perform(
                 MockMvcRequestBuilders.post("/checkout")
                         .contentType(MediaType.APPLICATION_JSON)
