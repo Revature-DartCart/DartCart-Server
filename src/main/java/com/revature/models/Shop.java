@@ -28,5 +28,6 @@ public class Shop {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id")
+    @JsonIgnore
     private Seller seller;
 }

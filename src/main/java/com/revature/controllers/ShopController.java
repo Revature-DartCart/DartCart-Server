@@ -3,13 +3,12 @@ package com.revature.controllers;
 import com.revature.models.Seller;
 import com.revature.models.Shop;
 import com.revature.services.ShopService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -36,8 +35,7 @@ public class ShopController {
     public ResponseEntity<Shop> getShopBySellerId(@PathVariable("seller_id") String id) {
         Optional<Shop> shop = shopService.getShopBySellerId(Integer.parseInt(id));
         return shop
-                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
 }

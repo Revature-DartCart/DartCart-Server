@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             // Our public endpoints
-            .antMatchers("/h2/**", "/login", "/register", "/signup/**", "/sellers/**", "/shops/**")
+            .antMatchers("/h2/**", "/login", "/register", "/signup/**", "/sellers/**", "/shops/**", "shop_products/**")
             .permitAll()
             // Our private endpoints
             .antMatchers("/actuator/**")

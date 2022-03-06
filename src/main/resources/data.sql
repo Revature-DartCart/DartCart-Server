@@ -120,6 +120,28 @@ VALUES (
     4
 );
 
+INSERT INTO Shops (
+    shop_id,
+    location,
+    seller_id
+)
+VALUES (
+    DEFAULT,
+    'ADDRESS',
+    1
+);
+
+INSERT INTO Shops (
+    shop_id,
+    location,
+    seller_id
+)
+VALUES (
+    DEFAULT,
+    'ADDRESS 2',
+    2
+);
+
 INSERT INTO Products (product_id, name, description) VALUES
 (1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
 
