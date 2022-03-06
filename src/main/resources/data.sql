@@ -12,7 +12,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'HughTheMann',
-    '16e168e4cb8c6921dc2bb3f1e11c87a12b4fa3c750ca14efeb7f8870ab611971',
+    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
     'Hugh',
     'Mann',
     'hughmanntheman@gmail.com',
@@ -35,7 +35,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Sammykins',
-    '3e4463134cf818db84a14d750b86603aa0611b1989c337d4bc9f0a14e3a08bb1',
+    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
     'Samantha',
     'Mann',
     'sammannnotthefish@gmail.com',
@@ -58,7 +58,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Caesar92',
-    'ac9ef06fa6d05293997edd051dee190ae657e5033a612b6977fe0fd6b227d99e',
+    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
     'Roe',
     'Mann',
     'thedieiscastxd@gmail.com',
@@ -81,30 +81,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'JerManny',
-    'bb45d85472de2bff5e1801cf09d3b0b5121a29e5e71bc128f1621ccf9d9d410f',
-    'Jer',
-    'Mann',
-    'jermanny@gmail.com',
-    '757-670-8879',
-    1645737745123,
-    'address'
-);
-
-INSERT INTO Users (
-    user_id,
-    username,
-    password,
-    first_name,
-    last_name,
-    email,
-    phone,
-    registration_date,
-    location
-)
-VALUES (
-    DEFAULT,
-    'test',
-    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
+    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
     'Jer',
     'Mann',
     'jermanny@gmail.com',
@@ -115,12 +92,14 @@ VALUES (
 
 INSERT INTO Sellers (
     seller_id,
+    name,
     homepage,
     description,
     user_id
 )
 VALUES (
     DEFAULT,
+    'Best Seller 1',
     'bestseller',
     'THE BEST SELLER!',
     1
@@ -128,16 +107,19 @@ VALUES (
 
 INSERT INTO Sellers (
     seller_id,
+    name,
     homepage,
     description,
     user_id
 )
 VALUES (
     DEFAULT,
+    'Best Seller 2',
     'alsobestseller',
     'ALSO THE BEST SELLER!!!',
     4
 );
+
 INSERT INTO Products (product_id, name, description) VALUES
 (1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
 
