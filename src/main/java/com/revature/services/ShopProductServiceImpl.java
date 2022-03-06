@@ -1,6 +1,11 @@
 package com.revature.services;
 
+
 import com.revature.models.*;
+
+import com.revature.models.Category;
+import com.revature.models.Product;
+import com.revature.models.ShopProduct;
 import com.revature.repositories.ProductRepo;
 import com.revature.repositories.ShopProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +21,10 @@ public class ShopProductServiceImpl implements ShopProductService {
     @Autowired
     ShopProductRepo shopProductRepo;
 
-    @Autowired
-    ProductRepo pr;
+   
+
+    ProductRepo productRepo;
+
 
     @Override
     public List<ShopProduct> getAllShopProducts() {
@@ -38,6 +45,7 @@ public class ShopProductServiceImpl implements ShopProductService {
     }
 
     @Override
+
     public List<ShopProductResponse> getSellersForProduct(int id) {
         List<ShopProduct> allListings =  shopProductRepo.findByProduct(shopProductRepo.findById(id).get().getProduct());
 
@@ -55,5 +63,27 @@ public class ShopProductServiceImpl implements ShopProductService {
                     ,s.getShop().getSeller().getDescription()));
         }
         return shopProducts;
+
+    public List<Product> getByProductCategory(String name, String category) {
+        List<Product> productList = (List<Product>) productRepo.findAll();
+        if(name != null){
+            productList = productList.stream().filter(product ->
+                    product.getName().toLowerCase().contains(name.toLowerCase())
+                            ||  product.getDescription().toLowerCase().contains(name.toLowerCase())
+            ).collect(Collectors.toList());
+
+        }
+        if(category != null){
+          productList = productList.stream().filter(product -> {
+              List<Category> categories = product.getCategories();
+              for (Category category1: categories){
+                  if(category1.getName().equalsIgnoreCase(category))
+                      return true;
+              }
+              return false;
+          }).collect(Collectors.toList());
+        }
+        return productList;
+
     }
 }
