@@ -14,22 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 public class UserController {
+  @Autowired
+  UserService userService;
 
-    @Autowired
-    UserService userService;
-
-    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<User> newUser(@RequestBody User u) {
-        try {
-            User created = userService.addUser(u);
-            if (created.getId() != 0) {
-                return new ResponseEntity<>(created, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+  @PostMapping(
+    value = "/register",
+    consumes = "application/json",
+    produces = "application/json"
+  )
+  public ResponseEntity<User> newUser(@RequestBody User u) {
+    try {
+      User created = userService.addUser(u);
+      if (created.getId() != 0) {
+        return new ResponseEntity<>(created, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
+  }
 }

@@ -10,11 +10,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.revature.models")
 @EnableJpaRepositories("com.revature.repositories")
 public class DartCartApplication {
+  public static ApplicationContext app;
 
-	public static ApplicationContext app;
-
-	public static void main(String[] args) {
-		app = SpringApplication.run(DartCartApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    app = SpringApplication.run(DartCartApplication.class, args);
+  }
 }

@@ -1,10 +1,9 @@
 package com.revature.models;
 
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 /**
  * This class hard codes data of an individual Product placed on an invoice.
@@ -15,18 +14,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 public class OrderDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_detail_id")
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "order_detail_id")
+  private int id;
 
-    @Column(updatable = false)
-    private int cost;
-    @Column(updatable = false)
-    private String name;
+  @Column(updatable = false)
+  private int cost;
 
-    @Column(length = 1000, updatable = false)
-    private String description;
+  @Column(updatable = false)
+  private String name;
 
-    private int quantity;
+  @Column(length = 1000, updatable = false)
+  private String description;
+
+  private int quantity;
 }

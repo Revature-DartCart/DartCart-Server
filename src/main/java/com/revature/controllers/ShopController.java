@@ -14,23 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 public class ShopController {
+  @Autowired
+  ShopService shopService;
 
-    @Autowired
-    ShopService shopService;
+  @PostMapping(
+    value = "/signup",
+    consumes = "application/json",
+    produces = "application/json"
+  )
+  public ResponseEntity<Shop> newShop(@RequestBody Shop s) {
+    try {
+      Shop created = shopService.addShop(s);
 
-    @PostMapping(value = "/signup", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Shop> newShop(@RequestBody Shop s) {
-        try {
-            Shop created = shopService.addShop(s);
-
-            if (created.getId() != 0) {
-                return new ResponseEntity<>(created, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-            }
-        } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+      if (created.getId() != 0) {
+        return new ResponseEntity<>(created, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+      }
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
+  }
 }
