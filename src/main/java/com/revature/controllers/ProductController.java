@@ -2,6 +2,8 @@ package com.revature.controllers;
 
 import com.revature.models.Product;
 import com.revature.services.ProductServiceImpl;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,4 +26,10 @@ public class ProductController {
             ? new ResponseEntity<Product>(p.get(), HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
+        return ps.getAllProducts();
+    }
+
 }
