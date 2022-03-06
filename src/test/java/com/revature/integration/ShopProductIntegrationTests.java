@@ -13,25 +13,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = com.revature.driver.DartCartApplication.class)
 @Transactional
 public class ShopProductIntegrationTests {
-  @Autowired
-  private ShopProductRepo shopProductRepository;
+    @Autowired
+    private ShopProductRepo shopProductRepository;
 
-  @Test
-  void getAllShopProducts() {
-    List<ShopProduct> allShopProducts = (List<ShopProduct>) shopProductRepository.findAll();
-    Assertions.assertNotNull(allShopProducts);
-    Assertions.assertEquals(1, allShopProducts.size());
-  }
+    @Test
+    void getAllShopProducts() {
+        List<ShopProduct> allShopProducts = (List<ShopProduct>) shopProductRepository.findAll();
+        Assertions.assertNotNull(allShopProducts);
+        Assertions.assertEquals(1, allShopProducts.size());
+    }
 
-  @Test
-  void getShopProductById() {
-    Optional<ShopProduct> shopProduct = shopProductRepository.findById(1);
-    Assertions.assertEquals(
-      "Kelloggs Froot Loops",
-      shopProduct.get().getProduct().getName()
-    );
-    Assertions.assertEquals(1, shopProduct.get().getProduct().getId());
-    Assertions.assertEquals(10, shopProduct.get().getQuantity());
-    Assertions.assertEquals(15, shopProduct.get().getPrice());
-  }
+    @Test
+    void getShopProductById() {
+        Optional<ShopProduct> shopProduct = shopProductRepository.findById(1);
+        Assertions.assertEquals("Kelloggs Froot Loops", shopProduct.get().getProduct().getName());
+        Assertions.assertEquals(1, shopProduct.get().getProduct().getId());
+        Assertions.assertEquals(10, shopProduct.get().getQuantity());
+        Assertions.assertEquals(15, shopProduct.get().getPrice());
+    }
 }

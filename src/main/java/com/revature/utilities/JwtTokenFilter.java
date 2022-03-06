@@ -21,64 +21,52 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
-  private final JwtTokenUtil jwtTokenUtil;
-  private final UserRepo userRepo;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserRepo userRepo;
 
-  public JwtTokenFilter(JwtTokenUtil jwtTokenUtil, UserRepo userRepo) {
-    this.jwtTokenUtil = jwtTokenUtil;
-    this.userRepo = userRepo;
-  }
-
-  @Override
-  public void doFilterInternal(
-    HttpServletRequest request,
-    HttpServletResponse response,
-    FilterChain filterChain
-  )
-    throws ServletException, IOException {
-    // Get authorization header and validate
-    final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-    if (header == null || !header.startsWith("Bearer ")) {
-      filterChain.doFilter(request, response);
-      return;
+    public JwtTokenFilter(JwtTokenUtil jwtTokenUtil, UserRepo userRepo) {
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userRepo = userRepo;
     }
 
-    // Get jwt token and validate
-    final String token = header.split(" ")[1].trim();
-    if (!jwtTokenUtil.validate(token)) {
-      filterChain.doFilter(request, response);
-      return;
+    @Override
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+        throws ServletException, IOException {
+        // Get authorization header and validate
+        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (header == null || !header.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Get jwt token and validate
+        final String token = header.split(" ")[1].trim();
+        if (!jwtTokenUtil.validate(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Get user identity and set it on the spring security context
+        com.revature.models.User tokenUser = userRepo.findByUsername(jwtTokenUtil.getUsername(token));
+        if (tokenUser == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+        if ("admin".equals(tokenUser.getUsername())) authorities.add(Role.ADMIN);
+        UserDetails userDetails = new User(tokenUser.getUsername(), tokenUser.getPassword(), authorities);
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+            userDetails,
+            null,
+            userDetails == null ? Arrays.asList() : userDetails.getAuthorities()
+        );
+
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        filterChain.doFilter(request, response);
     }
-
-    // Get user identity and set it on the spring security context
-    com.revature.models.User tokenUser = userRepo.findByUsername(
-      jwtTokenUtil.getUsername(token)
-    );
-    if (tokenUser == null) {
-      filterChain.doFilter(request, response);
-      return;
-    }
-
-    ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-    if ("admin".equals(tokenUser.getUsername())) authorities.add(Role.ADMIN);
-    UserDetails userDetails = new User(
-      tokenUser.getUsername(),
-      tokenUser.getPassword(),
-      authorities
-    );
-
-    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-      userDetails,
-      null,
-      userDetails == null ? Arrays.asList() : userDetails.getAuthorities()
-    );
-
-    authentication.setDetails(
-      new WebAuthenticationDetailsSource().buildDetails(request)
-    );
-
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    filterChain.doFilter(request, response);
-  }
 }

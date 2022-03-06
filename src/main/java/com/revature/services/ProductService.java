@@ -4,5 +4,5 @@ import com.revature.models.Product;
 import java.util.Optional;
 
 public interface ProductService {
-  public Optional<Product> getProductById(int productId);
+    public Optional<Product> getProductById(int productId);
 }

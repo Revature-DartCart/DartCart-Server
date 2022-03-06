@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ShopProductServiceImpl implements ShopProductService {
-  @Autowired
-  ShopProductRepo shopProductRepo;
+    @Autowired
+    ShopProductRepo shopProductRepo;
 
-  @Override
-  public List<ShopProduct> getAllShopProducts() {
-    return (List<ShopProduct>) shopProductRepo.findAll();
-  }
+    @Override
+    public List<ShopProduct> getAllShopProducts() {
+        return (List<ShopProduct>) shopProductRepo.findAll();
+    }
 
-  @Override
-  public Optional<ShopProduct> getShopProductById(int id) {
-    return shopProductRepo.findById(id);
-  }
+    @Override
+    public Optional<ShopProduct> getShopProductById(int id) {
+        return shopProductRepo.findById(id);
+    }
 }

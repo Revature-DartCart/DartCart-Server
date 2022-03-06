@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ShopProductService {
-  /**
-   * This method gets all Shop Products from the database
-   * @return  returns a List of all Shop Products
-   */
-  List<ShopProduct> getAllShopProducts();
+    /**
+     * This method gets all Shop Products from the database
+     * @return  returns a List of all Shop Products
+     */
+    List<ShopProduct> getAllShopProducts();
 
-  /**
-   * Retrieves a specific ShopProduct by parsed ID
-   * @param id    ID of Shop Product to be retrieved from the database
-   * @return      Returns the retrieved Shop Product by the ID
-   */
-  Optional<ShopProduct> getShopProductById(int id);
+    /**
+     * Retrieves a specific ShopProduct by parsed ID
+     * @param id    ID of Shop Product to be retrieved from the database
+     * @return      Returns the retrieved Shop Product by the ID
+     */
+    Optional<ShopProduct> getShopProductById(int id);
 }

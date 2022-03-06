@@ -10,20 +10,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService implements UserDetailsService {
-  @Autowired
-  UserService userService;
+    @Autowired
+    UserService userService;
 
-  @Override
-  public UserDetails loadUserByUsername(String username)
-    throws UsernameNotFoundException {
-    //authorization method checks for the object exist in DB using the username
-    com.revature.models.User user = userService.getUserByUsername(username);
-    if (user == null) {
-      throw new UsernameNotFoundException(
-        "No user found of this username:" + username
-      );
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //authorization method checks for the object exist in DB using the username
+        com.revature.models.User user = userService.getUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("No user found of this username:" + username);
+        }
+
+        return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
-
-    return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
-  }
 }

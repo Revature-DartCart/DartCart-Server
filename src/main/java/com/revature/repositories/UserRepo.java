@@ -10,26 +10,26 @@ import org.springframework.stereotype.Repository;
 @Repository
 @NonNullApi
 public interface UserRepo extends CrudRepository<User, Integer> {
-  @EntityGraph(value = "graph.UserCartItems")
-  public User findByUsername(String username);
+    @EntityGraph(value = "graph.UserCartItems")
+    public User findByUsername(String username);
 
-  @Override
-  @EntityGraph(value = "graph.UserCartItems")
-  public <S extends User> S save(S entity);
+    @Override
+    @EntityGraph(value = "graph.UserCartItems")
+    public <S extends User> S save(S entity);
 
-  @Override
-  @EntityGraph(value = "graph.UserCartItems")
-  public <S extends User> Iterable<S> saveAll(Iterable<S> entities);
+    @Override
+    @EntityGraph(value = "graph.UserCartItems")
+    public <S extends User> Iterable<S> saveAll(Iterable<S> entities);
 
-  @Override
-  @EntityGraph(value = "graph.UserCartItems")
-  public Optional<User> findById(Integer integer);
+    @Override
+    @EntityGraph(value = "graph.UserCartItems")
+    public Optional<User> findById(Integer integer);
 
-  @Override
-  @EntityGraph(value = "graph.UserCartItems")
-  public Iterable<User> findAll();
+    @Override
+    @EntityGraph(value = "graph.UserCartItems")
+    public Iterable<User> findAll();
 
-  @Override
-  @EntityGraph(value = "graph.UserCartItems")
-  public Iterable<User> findAllById(Iterable<Integer> integers);
+    @Override
+    @EntityGraph(value = "graph.UserCartItems")
+    public Iterable<User> findAllById(Iterable<Integer> integers);
 }

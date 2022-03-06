@@ -17,51 +17,43 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @SpringBootTest(classes = DartCartApplication.class)
 public class AuthServiceTest {
-  String trueUser = "JerManny";
-  String falseUser = "fakeUser";
+    String trueUser = "JerManny";
+    String falseUser = "fakeUser";
 
-  //class where method exist
-  private static Object authService;
+    //class where method exist
+    private static Object authService;
 
-  private static final String CLASSNAME = "com.revature.services.AuthService";
+    private static final String CLASSNAME = "com.revature.services.AuthService";
 
-  private static final String METHOD = "loadUserByUsername";
+    private static final String METHOD = "loadUserByUsername";
 
-  //method we are testing
-  private static Method loadUser;
+    //method we are testing
+    private static Method loadUser;
 
-  @BeforeAll
-  static void setUp(@Autowired ApplicationContext app) {
-    try {
-      authService = app.getBean(Class.forName(CLASSNAME));
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(
-        "Class: " + CLASSNAME + " needs to be implemented",
-        e
-      );
+    @BeforeAll
+    static void setUp(@Autowired ApplicationContext app) {
+        try {
+            authService = app.getBean(Class.forName(CLASSNAME));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Class: " + CLASSNAME + " needs to be implemented", e);
+        }
+
+        try {
+            loadUser = authService.getClass().getMethod(METHOD, String.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Method: " + METHOD + " needs to be implemented", e);
+        }
     }
 
-    try {
-      loadUser = authService.getClass().getMethod(METHOD, String.class);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(
-        "Method: " + METHOD + " needs to be implemented",
-        e
-      );
+    @Test
+    void valid_GetUsernameByUsername() throws InvocationTargetException, IllegalAccessException {
+        UserDetails retVal = (UserDetails) loadUser.invoke(authService, trueUser);
+        assertEquals(retVal.getUsername(), trueUser);
     }
-  }
 
-  @Test
-  void valid_GetUsernameByUsername()
-    throws InvocationTargetException, IllegalAccessException {
-    UserDetails retVal = (UserDetails) loadUser.invoke(authService, trueUser);
-    assertEquals(retVal.getUsername(), trueUser);
-  }
-
-  @Test
-  void invalid_GetUsernameByUsername()
-    throws InvocationTargetException, IllegalAccessException {
-    UserDetails retVal = (UserDetails) loadUser.invoke(authService, trueUser);
-    assertNotEquals(retVal.getUsername(), falseUser);
-  }
+    @Test
+    void invalid_GetUsernameByUsername() throws InvocationTargetException, IllegalAccessException {
+        UserDetails retVal = (UserDetails) loadUser.invoke(authService, trueUser);
+        assertNotEquals(retVal.getUsername(), falseUser);
+    }
 }

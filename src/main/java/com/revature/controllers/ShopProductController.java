@@ -14,19 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 public class ShopProductController {
-  @Autowired
-  private ShopProductServiceImpl sps;
+    @Autowired
+    private ShopProductServiceImpl sps;
 
-  @GetMapping("/shop_products/{id}")
-  public ResponseEntity<ShopProduct> getShopProductByShopId(
-    @PathVariable("id") String id
-  ) {
-    Optional<ShopProduct> sp = sps.getShopProductById(Integer.parseInt(id));
-    return ResponseEntity.of(sp);
-  }
+    @GetMapping("/shop_products/{id}")
+    public ResponseEntity<ShopProduct> getShopProductByShopId(@PathVariable("id") String id) {
+        Optional<ShopProduct> sp = sps.getShopProductById(Integer.parseInt(id));
+        return ResponseEntity.of(sp);
+    }
 
-  @GetMapping("/shop_products")
-  public List<ShopProduct> getAllShopProducts() {
-    return sps.getAllShopProducts();
-  }
+    @GetMapping("/shop_products")
+    public List<ShopProduct> getAllShopProducts() {
+        return sps.getAllShopProducts();
+    }
 }

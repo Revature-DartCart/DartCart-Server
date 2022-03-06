@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-  @Autowired
-  ProductRepo productRepo;
+    @Autowired
+    ProductRepo productRepo;
 
-  @Override
-  public Optional<Product> getProductById(int productId) {
-    return productRepo.findById(productId);
-  }
+    @Override
+    public Optional<Product> getProductById(int productId) {
+        return productRepo.findById(productId);
+    }
 }

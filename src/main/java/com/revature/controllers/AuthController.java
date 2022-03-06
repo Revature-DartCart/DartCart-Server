@@ -21,45 +21,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class AuthController {
-  @Autowired
-  AuthenticationManager authenticationManager;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-  @Autowired
-  JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
-  @Autowired
-  UserService userService;
+    @Autowired
+    UserService userService;
 
-  @Autowired
-  AuthService authService;
+    @Autowired
+    AuthService authService;
 
-  @PostMapping("/login")
-  public ResponseEntity<com.revature.models.User> login(
-    @RequestBody UserLogin request
-  ) {
-    try {
-      Authentication authenticate = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(
-          request.getUsername(),
-          request.getPassword()
-        )
-      );
+    @PostMapping("/login")
+    public ResponseEntity<com.revature.models.User> login(@RequestBody UserLogin request) {
+        try {
+            Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+            );
 
-      User user = (User) authenticate.getPrincipal();
-      com.revature.models.User retUser = userService.getUserByUsername(
-        user.getUsername()
-      );
-      retUser.setPassword(null);
+            User user = (User) authenticate.getPrincipal();
+            com.revature.models.User retUser = userService.getUserByUsername(user.getUsername());
+            retUser.setPassword(null);
 
-      return ResponseEntity
-        .ok()
-        .header(
-          HttpHeaders.AUTHORIZATION,
-          jwtTokenUtil.generateAccessToken(user)
-        )
-        .body(retUser);
-    } catch (BadCredentialsException ex) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity
+                .ok()
+                .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
+                .body(retUser);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
-  }
 }

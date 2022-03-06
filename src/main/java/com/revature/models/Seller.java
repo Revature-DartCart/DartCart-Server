@@ -16,21 +16,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Sellers")
 public class Seller {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "seller_id")
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "seller_id")
+    private int id;
 
-  @NotNull
-  private String name;
+    @NotNull
+    private String name;
 
-  @NotNull
-  @Column(unique = true)
-  private String homepage;
+    @NotNull
+    @Column(unique = true)
+    private String homepage;
 
-  private String description;
+    private String description;
 
-  @OneToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
