@@ -122,6 +122,40 @@ public class CheckoutServiceImpl implements CheckoutService {
                 }
             }
 
+            // Need to resolve all lazy loading in user dependencies
+            User resolvedUser = new User();
+            resolvedUser.setId(fetchedUser.getId());
+            resolvedUser.setUsername(fetchedUser.getUsername());
+            resolvedUser.setPassword(fetchedUser.getPassword());
+            resolvedUser.setPhone(fetchedUser.getPhone());
+            resolvedUser.setEmail(fetchedUser.getEmail());
+            resolvedUser.setFirstName(fetchedUser.getFirstName());
+            resolvedUser.setLastName(fetchedUser.getLastName());
+            resolvedUser.setRegistrationDate(fetchedUser.getRegistrationDate());
+            resolvedUser.setLocation(fetchedUser.getLocation());
+
+            resolvedUser.setItemList(new ArrayList<>());
+            fetchedUser.getItemList().forEach(cartItem -> {
+                ShopProduct shopProduct = new ShopProduct();
+                shopProduct.setShop(cartItem.getShopProduct().getShop());
+                shopProduct.setId(cartItem.getShopProduct().getId());
+                shopProduct.setPrice(cartItem.getShopProduct().getPrice());
+                shopProduct.setQuantity(cartItem.getShopProduct().getQuantity());
+                shopProduct.setDiscount(cartItem.getShopProduct().getDiscount());
+
+                Product product = new Product();
+                product.setId(cartItem.getShopProduct().getProduct().getId());
+                product.setName(cartItem.getShopProduct().getProduct().getName());
+                product.setDescription(cartItem.getShopProduct().getProduct().getDescription());
+                product.setCategories(new ArrayList<>());
+                cartItem.getShopProduct().getProduct().getCategories().forEach(category -> product.getCategories().add(category));
+                shopProduct.setProduct(product);
+
+                cartItem.setShopProduct(shopProduct);
+                cartItem.setCustomer(null);
+                resolvedUser.getItemList().add(cartItem);
+            });
+
             return fetchedUser; // incoming user data didn't match database
         } else {
             return user; // database couldn't find user
