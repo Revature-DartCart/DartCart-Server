@@ -1,10 +1,10 @@
 package com.revature.models;
 
+import com.sun.istack.NotNull;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 /**
  * This class represents a Seller entity in the database.
@@ -16,18 +16,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Sellers")
 public class Seller {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "seller_id")
+  private int id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "seller_id")
-    private int id;
+  @NotNull
+  private String name;
 
-    private String homepage;
+  @NotNull
+  @Column(unique = true)
+  private String homepage;
 
-    private String description;
+  private String description;
 
-    @OneToOne
-    @JoinColumn(name="user_id")
-    private User user;
-
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 }

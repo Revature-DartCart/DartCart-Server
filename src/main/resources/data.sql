@@ -121,9 +121,9 @@ INSERT INTO Sellers (
 )
 VALUES (
     DEFAULT,
-    '/sellers/bestseller',
+    'bestseller',
     'THE BEST SELLER!',
-    2
+    1
 );
 
 INSERT INTO Sellers (
@@ -134,13 +134,12 @@ INSERT INTO Sellers (
 )
 VALUES (
     DEFAULT,
-    '/sellers/alsobestseller',
+    'alsobestseller',
     'ALSO THE BEST SELLER!!!',
     4
 );
 INSERT INTO Products (product_id, name, description) VALUES
 (1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
-
 
 INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
 (1, 10, 15, 2, 1);

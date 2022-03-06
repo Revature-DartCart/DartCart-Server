@@ -1,8 +1,8 @@
 package com.revature.repositories;
 
-import com.revature.models.ShopProduct;
+import com.revature.models.Shop;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShopProductRepo extends CrudRepository<ShopProduct, Integer> {}
+public interface ShopRepo extends CrudRepository<Shop, Integer> {}

@@ -1,4 +1,5 @@
 package com.revature.configs;
+
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -6,15 +7,17 @@ import org.springframework.security.core.GrantedAuthority;
  * use of roles
  */
 public enum Role implements GrantedAuthority {
-    ADMIN("ROLE_ADMIN"),
-    USER("ROLE_CUSTOMER");
+  ADMIN("ROLE_ADMIN"),
+  USER("ROLE_CUSTOMER");
 
-    private final String role;
-    Role(String s){
-        role = s;
-    }
-    @Override
-    public String getAuthority() {
-        return role;
-    }
+  private final String role;
+
+  Role(String s) {
+    role = s;
+  }
+
+  @Override
+  public String getAuthority() {
+    return role;
+  }
 }

@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 public class SellerController {
-
-    @Autowired
-    SellerService sellerService;
+  @Autowired
+  SellerService sellerService;
+  // There's no need for an addSeller() method. It's handled by the /signup endpoint in ShopController,
+  // since by signing up as a Seller, you also create your first Shop automatically.
 
     // There's no need for an addSeller() method. It's handled by the /signup endpoint in ShopController,
     // since by signing up as a Seller, you also create your first Shop automatically.
