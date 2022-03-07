@@ -21,4 +21,9 @@ public class ShopProductServiceImpl implements ShopProductService {
     public Optional<ShopProduct> getShopProductById(int id) {
         return shopProductRepo.findById(id);
     }
+
+    @Override
+    public ShopProduct addShopProduct(ShopProduct s) {
+        return shopProductRepo.save(s);
+    }
 }

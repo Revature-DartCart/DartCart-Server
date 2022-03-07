@@ -24,7 +24,7 @@ public class ShopController {
             if (created.getId() != 0) {
                 return new ResponseEntity<>(created, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

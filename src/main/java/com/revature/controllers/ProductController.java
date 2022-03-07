@@ -2,7 +2,6 @@ package com.revature.controllers;
 
 import com.revature.models.Product;
 import com.revature.services.ProductServiceImpl;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +30,4 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return ps.getAllProducts();
     }
-
 }

@@ -143,12 +143,36 @@ VALUES (
 );
 
 INSERT INTO Products (product_id, name, description) VALUES
-(1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
+(1, 'LEGOs', 'This is a toy!'),
+(2, 'Blue Jeans', 'This is clothing!'),
+(3, 'La-Z-Boy', 'This is furniture!'),
+(4, 'PlayStation 5', 'This is an entertainment!'),
+(5, 'Pennzoil', 'This is automotive!'),
+(6, 'Vacuum Cleaner', 'This is home goods!'),
+(7, 'Notepad', 'This is school & office!'),
+(8, 'Shampoo', 'This is personal care!');
 
 INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
 (1, 10, 15, 2, 1);
 
-INSERT INTO Categories (category_id, name) VALUES (1, 'Food');
+INSERT INTO Categories (category_id, name) VALUES
+(1, 'Toys'),
+(2, 'Clothing'),
+(3, 'Furniture'),
+(4, 'Entertainment'),
+(5, 'Automotive'),
+(6, 'Home Goods'),
+(7, 'School & Office'),
+(8, 'Personal Care');
 
 INSERT INTO Product_Category (product_id, category_id) VALUES
-(1, 1);
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8);

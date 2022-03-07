@@ -27,7 +27,6 @@ public class Product {
     @Column(length = 1000)
     private String description;
 
-    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Product_Category",
