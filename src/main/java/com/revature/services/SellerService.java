@@ -13,4 +13,9 @@ public interface SellerService {
     public void updateSeller(Seller change);
     public boolean deleteSeller(int id);
 
+    public Optional<Seller> getSellerByUserId(int id);
+
+
+
+
 }

@@ -22,7 +22,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    UserService us;
+    UserService userService;
 
     @Autowired
     private CheckoutService checkoutService;
@@ -31,7 +31,7 @@ public class UserController {
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> newUser(@RequestBody User u) {
         try {
-            User created = us.addUser(u);
+            User created = userService.addUser(u);
             if (created.getId() != 0) {
                 return new ResponseEntity<>(created, HttpStatus.OK);
             } else {

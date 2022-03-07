@@ -5,7 +5,8 @@ import com.revature.models.Category;
 import com.revature.models.Product;
 import com.revature.models.Shop;
 import com.revature.models.ShopProduct;
-import com.revature.services.ShopProductServiceImpl;
+import com.revature.repositories.ProductRepo;
+import com.revature.services.ShopProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,10 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = DartCartApplication.class)
 public class ShopProductServicesTests {
     @Autowired
-    private ShopProductServiceImpl shopProductService;
+    private ShopProductService shopProductService;
+
+    @MockBean
+    private ProductRepo productRepo;
 
     @MockBean
     private ShopProductRepo shopProductRepo;
@@ -128,4 +132,64 @@ public class ShopProductServicesTests {
 
         assertNotEquals(shopProducts.size(), 2);
     }
+
+    @Test
+    void searchShopProducts() {
+        List<ShopProduct> testList = new ArrayList<>();
+        ShopProduct shopProduct = new ShopProduct();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        Product product = new Product(1, "Kelloggs Froot Loops", "Delicious frooty flava",categories );
+        shopProduct.setProduct(product);
+        shopProduct.setQuantity(10);
+        shopProduct.setDiscount(2);
+        shopProduct.setPrice(15);
+        testList.add(shopProduct);
+
+        when(shopProductRepo.findAll()).thenReturn(testList);
+        List<ShopProduct> shopProductList = shopProductService.searchByProductName("Froo");
+        assertEquals(shopProductList.size(), 1);
+
+        assertEquals(testList.get(0).getProduct().getName(), shopProductList.get(0).getProduct().getName());
+    }
+
+    @Test
+    void searchShopProductsFail() {
+        List<ShopProduct> testList = new ArrayList<>();
+        ShopProduct shopProduct = new ShopProduct();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        Product product = new Product(1, "Loops", "Delicious frooty flava",categories );
+        shopProduct.setProduct(product);
+        shopProduct.setQuantity(10);
+        shopProduct.setDiscount(2);
+        shopProduct.setPrice(15);
+        testList.add(shopProduct);
+
+        when(shopProductRepo.findAll()).thenReturn(testList);
+        List<ShopProduct> shopProductList = shopProductService.searchByProductName("Froo");
+
+        assertNotEquals(testList.size(), shopProductList.size());
+    }
+
+    @Test
+    void getByCategory(){
+        List<Product> products = new ArrayList<>();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        Product product = new Product(1, "Loops", "Delicious frooty flava",categories );
+        products.add(product);
+
+        when(productRepo.findAll()).thenReturn(products);
+        List<Product> allProducts = shopProductService.getByProductCategory(null,"Food");
+        List<Product> allProducts2 = shopProductService.getByProductCategory(null, "Categories");
+        assertEquals(products.get(0).getName(), allProducts.get(0).getName());
+        assertNotEquals(allProducts.size(), allProducts2.size());
+    }
+
+
 }

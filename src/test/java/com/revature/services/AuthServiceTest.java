@@ -7,23 +7,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = DartCartApplication.class)
 public class AuthServiceTest {
 
 
-    String trueUser = "JerManny";
-    String falseUser = "fakeUser";
+    private final String trueUser = "test";
+    private final String falseUser = "fakeUser";
 
 
     //class where method exist
@@ -56,13 +53,12 @@ public class AuthServiceTest {
     @Test
     void valid_GetUsernameByUsername() throws InvocationTargetException, IllegalAccessException {
         UserDetails retVal = (UserDetails) loadUser.invoke(authService, trueUser);
-        assertEquals(retVal.getUsername(),trueUser);
+        assertEquals(trueUser, retVal.getUsername());
     }
 
     @Test
     void invalid_GetUsernameByUsername() throws InvocationTargetException, IllegalAccessException {
-        UserDetails retVal = (UserDetails) loadUser.invoke(authService, trueUser);
-        assertNotEquals(retVal.getUsername(), falseUser);
+        assertThrows(InvocationTargetException.class, () -> loadUser.invoke(authService, falseUser));
     }
 
 }

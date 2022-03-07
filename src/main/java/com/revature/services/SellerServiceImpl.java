@@ -9,35 +9,36 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
 public class SellerServiceImpl implements SellerService {
 
     @Autowired
-    SellerRepo sr;
+    SellerRepo sellerRepo;
 
     @Override
     public Seller addSeller(Seller seller) {
-        return sr.save(seller);
+        return sellerRepo.save(seller);
     }
 
     @Override
     public Optional<Seller> getSellerById(int id) {
-        return sr.findById(id);
+        return sellerRepo.findById(id);
     }
 
     @Override
     public List<Seller> getAllSellers() {
-        return (List<Seller>) sr.findAll();
+        return (List<Seller>) sellerRepo.findAll();
     }
 
     @Override
     public void updateSeller(Seller change) {
-        sr.save(change);
+        sellerRepo.save(change);
     }
 
     @Override
     public boolean deleteSeller(int id) {
         try {
-            sr.deleteById(id);
+            sellerRepo.deleteById(id);
             return true;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -45,4 +46,8 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
+    @Override
+    public Optional<Seller> getSellerByUserId(int id) {
+        return sellerRepo.findByUserId(id);
+    }
 }

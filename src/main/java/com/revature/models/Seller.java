@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * This class represents a Seller entity in the database.
@@ -23,6 +24,11 @@ public class Seller {
     @Column(name = "seller_id")
     private int id;
 
+    @NotNull
+    private String name;
+
+    @NotNull
+    @Column(unique = true)
     private String homepage;
 
     private String description;
@@ -31,5 +37,6 @@ public class Seller {
     @JoinColumn(name="user_id")
     @JsonBackReference
     private User user;
+
 
 }

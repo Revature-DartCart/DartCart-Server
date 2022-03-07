@@ -22,37 +22,42 @@ import java.util.List;
 @Table(name = "Users")
 public class User {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
-    @Column(unique = true, nullable = false)
+    @NotNull
+    @Column(unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @NotNull
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
     private String firstName;
 
-    @Column(nullable = false)
+    @NotNull
     private String lastName;
 
-    @Column(nullable = false)
+    @NotNull
     private String email;
 
-    @Column(nullable = false)
+    @NotNull
     private String phone;
 
-    @Column(nullable = false)
+    @NotNull
     private String location;
 
-    @Column(nullable = false)
+    @NotNull
     private long registrationDate;
 
     // Returns items in both cart and wishlist
     // Filter by CartItem's saved field to separate the lists
     @OneToMany(mappedBy = "customer")
     private List<CartItem> itemList;
+    public User(int id){
+        this.id = id;
+    }
 }

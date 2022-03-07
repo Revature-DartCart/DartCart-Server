@@ -15,7 +15,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "CartItems")
+@Table(name = "Cart_Items")
+
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,15 @@ public class CartItem {
     @JsonBackReference
     private User customer;
 
+
     @OneToOne
     @JoinColumn(name = "shop_product_id")
     private ShopProduct shopProduct;
+
+    public CartItem(int quantity, boolean saved, User customer, ShopProduct shopProduct) {
+        this.quantity = quantity;
+        this.saved = saved;
+        this.customer = customer;
+        this.shopProduct = shopProduct;
+    }
 }

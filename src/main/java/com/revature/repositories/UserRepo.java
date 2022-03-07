@@ -3,6 +3,7 @@ package com.revature.repositories;
 import com.revature.models.User;
 import io.micrometer.core.lang.NonNullApi;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 public interface UserRepo extends CrudRepository<User, Integer> {
 
     @EntityGraph(value = "graph.UserCartItems")
+//    @Query("SELECT u FROM USERS u WHERE lower(n.username) = lower(?1)")
     public User findByUsername(String username);
 
     @Override

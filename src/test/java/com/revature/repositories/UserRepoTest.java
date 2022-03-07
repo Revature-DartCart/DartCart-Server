@@ -1,19 +1,15 @@
 package com.revature.repositories;
 
 import com.revature.driver.DartCartApplication;
-import com.revature.models.CartItem;
 import com.revature.models.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
-import javax.persistence.EntityGraph;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest(classes = DartCartApplication.class)
-public class UserRepoTests {
+public class UserRepoTest {
 
     @Autowired
     UserRepo userRepo;
@@ -63,6 +59,7 @@ public class UserRepoTests {
         verify(mockRepo).save(mockUser);
     }
 
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4})
     public void givenUserId_whenSave_thenUpdateUser(int id) {
