@@ -161,9 +161,6 @@ VALUES (
     2
 );
 
-INSERT INTO Shops (shop_id, location, seller_id) VALUES
-(1, 'Trump tower', 1);
-
 INSERT INTO Products (product_id, name, description) VALUES
 (1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
 
@@ -180,18 +177,3 @@ INSERT INTO Categories (category_id, name) VALUES
 (6, 'Home Goods'),
 (7, 'School & Office'),
 (8, 'Personal Care');
-INSERT INTO Categories (category_id, name) VALUES (1, 'Perishable');
-
-INSERT INTO Product_Category (product_id, category_id) VALUES
-(1, 1);
-
-(1, 1),
-(1, 2),
-(1, 3),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8);

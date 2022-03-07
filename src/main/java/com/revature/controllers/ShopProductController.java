@@ -1,9 +1,6 @@
 package com.revature.controllers;
 
-import com.revature.models.Seller;
-import com.revature.models.Shop;
-import com.revature.models.ShopProduct;
-import com.revature.models.ShopProductResponse;
+import com.revature.models.*;
 import com.revature.services.ShopProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

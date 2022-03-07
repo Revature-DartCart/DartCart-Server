@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ShopProductRepo extends CrudRepository<ShopProduct, Integer> {}
+public interface ShopProductRepo extends CrudRepository<ShopProduct, Integer> {
 
     List<ShopProduct> findByProduct(Product product);
 }

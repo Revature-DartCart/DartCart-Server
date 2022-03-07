@@ -31,9 +31,10 @@ public class ShopProductServiceImpl implements ShopProductService {
     public Optional<ShopProduct> getShopProductById(int id) {
 
         return shopProductRepository.findById(id);
+    }
     @Override
     public List<ShopProduct> searchByProductName(String searchString) {
-        List<ShopProduct> shopProductList = (List<ShopProduct>) shopProductRepo.findAll();
+        List<ShopProduct> shopProductList = (List<ShopProduct>) shopProductRepository.findAll();
         return shopProductList.stream().filter(shopProduct ->
                 shopProduct.getProduct().getName().toLowerCase().contains(searchString.toLowerCase())).collect(Collectors.toList());
     }
@@ -63,7 +64,7 @@ public class ShopProductServiceImpl implements ShopProductService {
 
     @Override
     public List<ShopProductResponse> getSellersForProduct(int id) {
-        List<ShopProduct> allListings =  shopProductRepo.findByProduct(shopProductRepo.findById(id).get().getProduct());
+        List<ShopProduct> allListings =  shopProductRepository.findByProduct(shopProductRepository.findById(id).get().getProduct());
 
         ArrayList<ShopProductResponse> shopProducts = new ArrayList<>();
 
