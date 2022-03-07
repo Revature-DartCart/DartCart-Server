@@ -1,11 +1,12 @@
 package com.revature.models;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.util.List;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * This class represents an individual Product.
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Products")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
@@ -28,10 +30,7 @@ public class Product {
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "Product_Category",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
+    @JoinTable(name="Product_Category", joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
+
 }

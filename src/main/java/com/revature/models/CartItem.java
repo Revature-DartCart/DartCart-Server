@@ -1,9 +1,11 @@
 package com.revature.models;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
  * This class represents an individual item in the cart or saved by a Customer.
@@ -13,7 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "CartItems")
+@Table(name = "Cart_Items")
+
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +32,15 @@ public class CartItem {
     @JoinColumn(name = "customer_id")
     private User customer;
 
+
     @OneToOne
+    @JoinColumn(name = "shop_product_id")
     private ShopProduct shopProduct;
+
+    public CartItem(int quantity, boolean saved, User customer, ShopProduct shopProduct) {
+        this.quantity = quantity;
+        this.saved = saved;
+        this.customer = customer;
+        this.shopProduct = shopProduct;
+    }
 }

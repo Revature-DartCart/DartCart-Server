@@ -1,15 +1,8 @@
 package com.revature.repositories;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import com.revature.driver.DartCartApplication;
 import com.revature.models.Seller;
 import com.revature.models.User;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,31 +11,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 @SpringBootTest(classes = DartCartApplication.class)
-public class SellerRepoTests {
+public class SellerRepoTest {
+
     @Autowired
     SellerRepo sellerRepo;
 
     @MockBean
     private UserRepo mockUserRepo;
 
-    private final User mockUser = new User(
-        1,
-        "test1",
-        "password",
-        "Test",
-        "User",
-        "test1@dartcart.net",
-        "123-456-7890",
-        "1 Test Street, Test Town, Testonia 12345",
-        123563672L,
-        null
+    final private User mockUser = new User(
+            1,
+            "test1",
+            "password",
+            "Test",
+            "User",
+            "test1@dartcart.net",
+            "123-456-7890",
+            "1 Test Street, Test Town, Testonia 12345",
+            123563672L,
+            null
     );
 
-    private final Seller mockSeller = new Seller(1, "New Seller", "/newseller", "THE BEST NEW SELLER!!!", mockUser);
+    final private Seller mockSeller = new Seller(
+            1,
+            "New Seller",
+            "/newseller",
+            "THE BEST NEW SELLER!!!",
+            mockUser
+    );
 
     @ParameterizedTest
-    @ValueSource(ints = { 1, 2 })
+    @ValueSource(ints = {1, 2})
     public void givenSellerId_whenFindById_thenFindSeller(int id) {
         Optional<Seller> output = sellerRepo.findById(id);
         assertTrue(output.isPresent());
@@ -68,7 +76,13 @@ public class SellerRepoTests {
 
     @Test
     public void givenSellerId_whenSave_thenUpdateSeller() {
-        Seller testSeller = new Seller(1, "New Seller", "/newseller", "THE SUPER DUPER BEST NEW SELLER!!!", mockUser);
+        Seller testSeller = new Seller(
+                1,
+                "New Seller",
+                "/newseller",
+                "THE SUPER DUPER BEST NEW SELLER!!!",
+                mockUser
+        );
 
         sellerRepo.save(testSeller);
         Optional<Seller> output = sellerRepo.findById(mockUser.getId());
@@ -78,10 +92,11 @@ public class SellerRepoTests {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = { 1, 2 })
+    @ValueSource(ints = {1, 2})
     public void givenSellerId_whenDelete_thenDeleteSeller(int id) {
         SellerRepo mockRepo = mock(SellerRepo.class);
         mockRepo.deleteById(id);
         verify(mockRepo).deleteById((id));
     }
+
 }

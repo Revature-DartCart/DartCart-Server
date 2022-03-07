@@ -1,74 +1,76 @@
 package com.revature.unit.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
 import com.revature.driver.DartCartApplication;
 import com.revature.models.Category;
 import com.revature.models.Product;
 import com.revature.models.Shop;
 import com.revature.models.ShopProduct;
-import com.revature.repositories.ShopProductRepo;
-import com.revature.services.ShopProductServiceImpl;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import com.revature.repositories.ProductRepo;
+import com.revature.services.ShopProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.revature.repositories.ShopProductRepo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest(classes = DartCartApplication.class)
 public class ShopProductServicesTests {
     @Autowired
-    private ShopProductServiceImpl shopProductService;
+    private ShopProductService shopProductService;
+
+    @MockBean
+    private ProductRepo productRepo;
 
     @MockBean
     private ShopProductRepo shopProductRepo;
 
-    private static final Shop shop = new Shop();
+    final static private Shop shop = new Shop();
 
-    static final ShopProduct testShopProduct = new ShopProduct(
-        1,
-        20,
-        50,
-        0,
-        shop,
-        new Product(
+
+    final static ShopProduct testShopProduct = new ShopProduct(
             1,
-            "testProduct",
-            "testDescription",
-            new ArrayList<Category>(Arrays.asList(new Category(1, "testCategory")))
-        )
+            20,
+            50,
+            0,
+            shop,
+            new Product(
+                    1,
+                    "testProduct",
+                    "testDescription",
+                    new ArrayList<Category>(Arrays.asList(new Category(1, "testCategory"))))
     );
 
-    static final ShopProduct testShopProduct2 = new ShopProduct(
-        1,
-        30,
-        70,
-        2,
-        shop,
-        new Product(
+    final static ShopProduct testShopProduct2 = new ShopProduct(
+            1,
+            30,
+            70,
             2,
-            "testProduct2",
-            "testDescription2",
-            new ArrayList<Category>(Arrays.asList(new Category(2, "testCategory2")))
-        )
+            shop,
+            new Product(2,
+                    "testProduct2",
+                    "testDescription2",
+                    new ArrayList<Category>(Arrays.asList(new Category(2, "testCategory2"))))
     );
 
-    static final ShopProduct testShopProduct3 = new ShopProduct(
-        1,
-        90,
-        10,
-        5,
-        shop,
-        new Product(
-            3,
-            "testProduct3",
-            "testDescription3",
-            new ArrayList<Category>(Arrays.asList(new Category(3, "testCategory3")))
-        )
+    final static ShopProduct testShopProduct3 = new ShopProduct(
+            1,
+            90,
+            10,
+            5,
+            shop,
+            new Product(3,
+                    "testProduct3",
+                    "testDescription3",
+                    new ArrayList<Category>(Arrays.asList(new Category(3, "testCategory3"))))
     );
 
     @Test
@@ -130,4 +132,64 @@ public class ShopProductServicesTests {
 
         assertNotEquals(shopProducts.size(), 2);
     }
+
+    @Test
+    void searchShopProducts() {
+        List<ShopProduct> testList = new ArrayList<>();
+        ShopProduct shopProduct = new ShopProduct();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        Product product = new Product(1, "Kelloggs Froot Loops", "Delicious frooty flava",categories );
+        shopProduct.setProduct(product);
+        shopProduct.setQuantity(10);
+        shopProduct.setDiscount(2);
+        shopProduct.setPrice(15);
+        testList.add(shopProduct);
+
+        when(shopProductRepo.findAll()).thenReturn(testList);
+        List<ShopProduct> shopProductList = shopProductService.searchByProductName("Froo");
+        assertEquals(shopProductList.size(), 1);
+
+        assertEquals(testList.get(0).getProduct().getName(), shopProductList.get(0).getProduct().getName());
+    }
+
+    @Test
+    void searchShopProductsFail() {
+        List<ShopProduct> testList = new ArrayList<>();
+        ShopProduct shopProduct = new ShopProduct();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        Product product = new Product(1, "Loops", "Delicious frooty flava",categories );
+        shopProduct.setProduct(product);
+        shopProduct.setQuantity(10);
+        shopProduct.setDiscount(2);
+        shopProduct.setPrice(15);
+        testList.add(shopProduct);
+
+        when(shopProductRepo.findAll()).thenReturn(testList);
+        List<ShopProduct> shopProductList = shopProductService.searchByProductName("Froo");
+
+        assertNotEquals(testList.size(), shopProductList.size());
+    }
+
+    @Test
+    void getByCategory(){
+        List<Product> products = new ArrayList<>();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        Product product = new Product(1, "Loops", "Delicious frooty flava",categories );
+        products.add(product);
+
+        when(productRepo.findAll()).thenReturn(products);
+        List<Product> allProducts = shopProductService.getByProductCategory(null,"Food");
+        List<Product> allProducts2 = shopProductService.getByProductCategory(null, "Categories");
+        assertEquals(products.get(0).getName(), allProducts.get(0).getName());
+        assertNotEquals(allProducts.size(), allProducts2.size());
+    }
+
+
 }

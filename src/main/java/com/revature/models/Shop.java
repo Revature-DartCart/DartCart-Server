@@ -1,12 +1,13 @@
 package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.revature.models.Seller;
 import com.sun.istack.NotNull;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.revature.models.Seller;
+
+import javax.persistence.*;
 
 /**
  * This class represents an individual location controlled by a Seller.
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Shops")
 public class Shop {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shop_id")
@@ -28,6 +30,12 @@ public class Shop {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id")
-    @JsonIgnore
     private Seller seller;
+
+    public Shop(int id){
+        this.id = id;
+        location = "";
+        seller = new Seller();
+    }
+
 }
