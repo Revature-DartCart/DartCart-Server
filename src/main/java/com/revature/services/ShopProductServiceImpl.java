@@ -45,7 +45,7 @@ public class ShopProductServiceImpl implements ShopProductService {
 
         for(ShopProduct s:allListings)
         {
-            shopProducts.add(new ShopProductResponse(s.getShop_product_id()
+            shopProducts.add(new ShopProductResponse(s.getId()
                     ,s.getShop().getId()
                     ,s.getProduct()
                     ,s.getPrice()

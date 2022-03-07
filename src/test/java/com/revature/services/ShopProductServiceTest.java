@@ -70,8 +70,8 @@ public class ShopProductServiceTest
             ArrayList<ShopProduct> testList = new ArrayList<>();
             testList.add(mockShopProduct);
             Mockito.when(mockShopProductRepo.findByProduct(mockShopProduct.getProduct())).thenReturn(testList);
-            Mockito.when(mockShopProductRepo.findById(mockShopProduct.getShop_product_id())).thenReturn(Optional.of(mockShopProduct));
+            Mockito.when(mockShopProductRepo.findById(mockShopProduct.getId())).thenReturn(Optional.of(mockShopProduct));
 
-            Assertions.assertEquals(new ShopProductResponse(mockShopProduct.getShop_product_id(),mockShop.getId(),mockProduct,mockShopProduct.getPrice(),mockShop.getLocation(),mockShopProduct.getDiscount(),mockShopProduct.getQuantity(),mockSeller.getDescription()),mockShopService.getSellersForProduct(mockShopProduct.getShop_product_id()).get(0));
+            Assertions.assertEquals(new ShopProductResponse(mockShopProduct.getId(),mockShop.getId(),mockProduct,mockShopProduct.getPrice(),mockShop.getLocation(),mockShopProduct.getDiscount(),mockShopProduct.getQuantity(),mockSeller.getDescription()),mockShopService.getSellersForProduct(mockShopProduct.getId()).get(0));
         }
 }

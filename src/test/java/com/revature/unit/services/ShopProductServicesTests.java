@@ -78,7 +78,7 @@ public class ShopProductServicesTests {
 
         assertTrue(shopProduct.isPresent());
 
-        assertEquals(shopProduct.get().getShop_product_id(), 1);
+        assertEquals(shopProduct.get().getId(), 1);
         assertEquals(shopProduct.get().getQuantity(), 20);
         assertEquals(shopProduct.get().getPrice(), 50);
         assertEquals(shopProduct.get().getDiscount(), 0);
@@ -95,7 +95,7 @@ public class ShopProductServicesTests {
 
         assertTrue(shopProduct.isPresent());
 
-        assertNotEquals(shopProduct.get().getShop_product_id(), 2);
+        assertNotEquals(shopProduct.get().getId(), 2);
         assertNotEquals(shopProduct.get().getQuantity(), 50);
         assertNotEquals(shopProduct.get().getPrice(), 100);
         assertNotEquals(shopProduct.get().getDiscount(), 10);
