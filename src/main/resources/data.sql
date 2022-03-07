@@ -152,8 +152,8 @@ INSERT INTO Products (product_id, name, description) VALUES
 (7, 'Notepad', 'This is school & office!'),
 (8, 'Shampoo', 'This is personal care!');
 
-INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
-(1, 10, 15, 2, 1);
+INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id, shop_id) VALUES
+(1, 10, 15, 2, 1, 1);
 
 INSERT INTO Categories (category_id, name) VALUES
 (1, 'Toys'),
