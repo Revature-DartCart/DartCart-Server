@@ -41,7 +41,7 @@ public class Invoice {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
     private List<OrderDetail> orderDetails;
 

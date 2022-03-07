@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,11 @@ public class CartItem {
     private boolean saved;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User customer;
 
     @OneToOne
+    @JoinColumn(name = "shop_product_id")
     private ShopProduct shopProduct;
 }

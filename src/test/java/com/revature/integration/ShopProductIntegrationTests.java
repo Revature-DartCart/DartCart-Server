@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -24,9 +25,10 @@ public class ShopProductIntegrationTests {
     void getAllShopProducts() {
         List<ShopProduct> allShopProducts = (List<ShopProduct>) shopProductRepository.findAll();
         Assertions.assertNotNull(allShopProducts);
-        Assertions.assertEquals(1, allShopProducts.size());
+        Assertions.assertEquals(2, allShopProducts.size());
     }
 
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
     void getShopProductById() {
         Optional<ShopProduct> shopProduct = shopProductRepository.findById(1);
