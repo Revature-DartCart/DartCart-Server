@@ -12,7 +12,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'HughTheMann',
-    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
+    '16e168e4cb8c6921dc2bb3f1e11c87a12b4fa3c750ca14efeb7f8870ab611971',
     'Hugh',
     'Mann',
     'hughmanntheman@gmail.com',
@@ -35,7 +35,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Sammykins',
-    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
+    '3e4463134cf818db84a14d750b86603aa0611b1989c337d4bc9f0a14e3a08bb1',
     'Samantha',
     'Mann',
     'sammannnotthefish@gmail.com',
@@ -58,7 +58,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Caesar92',
-    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
+    'ac9ef06fa6d05293997edd051dee190ae657e5033a612b6977fe0fd6b227d99e',
     'Roe',
     'Mann',
     'thedieiscastxd@gmail.com',
@@ -81,7 +81,30 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'JerManny',
-    '$2a$12$p16sotKqAbR7htIl08ms.eBUfmSvmd2bq0nyPobJONYnE0KmWb72O',
+    'bb45d85472de2bff5e1801cf09d3b0b5121a29e5e71bc128f1621ccf9d9d410f',
+    'Jer',
+    'Mann',
+    'jermanny@gmail.com',
+    '757-670-8879',
+    1645737745123,
+    'address'
+);
+
+INSERT INTO Users (
+    user_id,
+    username,
+    password,
+    first_name,
+    last_name,
+    email,
+    phone,
+    registration_date,
+    location
+)
+VALUES (
+    DEFAULT,
+    'test',
+    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
     'Jer',
     'Mann',
     'jermanny@gmail.com',
@@ -92,30 +115,26 @@ VALUES (
 
 INSERT INTO Sellers (
     seller_id,
-    name,
     homepage,
     description,
     user_id
 )
 VALUES (
     DEFAULT,
-    'Best Seller 1',
-    'bestseller',
+    '/sellers/bestseller',
     'THE BEST SELLER!',
-    1
+    2
 );
 
 INSERT INTO Sellers (
     seller_id,
-    name,
     homepage,
     description,
     user_id
 )
 VALUES (
     DEFAULT,
-    'Best Seller 2',
-    'alsobestseller',
+    '/sellers/alsobestseller',
     'ALSO THE BEST SELLER!!!',
     4
 );
@@ -142,18 +161,15 @@ VALUES (
     2
 );
 
-INSERT INTO Products (product_id, name, description) VALUES
-(1, 'LEGOs', 'This is a toy!'),
-(2, 'Blue Jeans', 'This is clothing!'),
-(3, 'La-Z-Boy', 'This is furniture!'),
-(4, 'PlayStation 5', 'This is an entertainment!'),
-(5, 'Pennzoil', 'This is automotive!'),
-(6, 'Vacuum Cleaner', 'This is home goods!'),
-(7, 'Notepad', 'This is school & office!'),
-(8, 'Shampoo', 'This is personal care!');
+INSERT INTO Shops (shop_id, location, seller_id) VALUES
+(1, 'Trump tower', 1);
 
-INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
-(1, 10, 15, 2, 1);
+INSERT INTO Products (product_id, name, description) VALUES
+(1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
+
+
+INSERT INTO Shop_Products (shop_product_id, shop_id, quantity, price, discount, product_id) VALUES
+(1, 1, 10, 15, 2, 1);
 
 INSERT INTO Categories (category_id, name) VALUES
 (1, 'Toys'),
@@ -164,8 +180,11 @@ INSERT INTO Categories (category_id, name) VALUES
 (6, 'Home Goods'),
 (7, 'School & Office'),
 (8, 'Personal Care');
+INSERT INTO Categories (category_id, name) VALUES (1, 'Perishable');
 
 INSERT INTO Product_Category (product_id, category_id) VALUES
+(1, 1);
+
 (1, 1),
 (1, 2),
 (1, 3),
