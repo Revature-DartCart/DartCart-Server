@@ -143,7 +143,8 @@ INSERT INTO Products (product_id, name, description) VALUES
 
 
 INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
-(1, 10, 15, 2, 1);
+(1, 10, 15, 2, 1),
+(2, 10, 15, 2, 1);
 
 INSERT INTO Categories (category_id, name) VALUES (1, 'Food');
 

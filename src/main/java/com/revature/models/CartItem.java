@@ -34,6 +34,7 @@ public class CartItem {
 
 
     @OneToOne
+    @JoinColumn(name = "shop_product_id")
     private ShopProduct shopProduct;
 
     public CartItem(int quantity, boolean saved, User customer, ShopProduct shopProduct) {
