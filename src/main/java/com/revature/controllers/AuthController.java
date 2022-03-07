@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Locale;
+
 @RestController
 @CrossOrigin
 public class AuthController {
@@ -41,7 +43,7 @@ public class AuthController {
             );
 
             User user = (User) authenticate.getPrincipal();
-            com.revature.models.User retUser = userService.getUserByUsername(user.getUsername());
+            com.revature.models.User retUser = userService.getUserByUsername(user.getUsername().toLowerCase(Locale.ROOT));
             retUser.setPassword(null);
 
             return ResponseEntity

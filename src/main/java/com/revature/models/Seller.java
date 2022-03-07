@@ -2,10 +2,12 @@ package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * This class represents a Seller entity in the database.
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Sellers")
 public class Seller {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seller_id")
@@ -32,7 +35,8 @@ public class Seller {
     private String description;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
+    @JoinColumn(name="user_id")
     private User user;
+
+
 }

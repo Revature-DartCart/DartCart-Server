@@ -20,7 +20,7 @@ public class ShopProductIntegrationTests {
     void getAllShopProducts() {
         List<ShopProduct> allShopProducts = (List<ShopProduct>) shopProductRepository.findAll();
         Assertions.assertNotNull(allShopProducts);
-        Assertions.assertEquals(1, allShopProducts.size());
+        Assertions.assertEquals(2, allShopProducts.size());
     }
 
     @Test

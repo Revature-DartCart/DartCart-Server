@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Locale;
+
 @CrossOrigin
 @RestController
 public class UserController {
@@ -19,6 +21,8 @@ public class UserController {
 
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> newUser(@RequestBody User u) {
+        if(u.getUsername() != null)
+            u.setUsername(u.getUsername().toLowerCase(Locale.ROOT));
         try {
             User created = userService.addUser(u);
             if (created.getId() != 0) {

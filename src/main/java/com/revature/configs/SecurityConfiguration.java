@@ -3,6 +3,7 @@ package com.revature.configs;
 import com.revature.configs.Role;
 import com.revature.services.AuthService;
 import com.revature.utilities.JwtTokenFilter;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Configurable
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private AuthService authService;
 
@@ -42,23 +40,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Enable CORS and disable CSRF
         http = http.cors().and().csrf().disable();
 
-
         // Set session management to stateless
-        http = http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+        http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
 
         // Set unauthorized requests exception handler
-        http = http
+        http =
+            http
                 .exceptionHandling()
                 .authenticationEntryPoint(
-                        (request, response, ex) -> {
-                            response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
-                                    ex.getMessage()
-                            );
-                        }
+                    (request, response, ex) -> {
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+                    }
                 )
                 .and();
 
@@ -66,16 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             // Our public endpoints
-            .antMatchers(
-                "/h2/**",
-                "/login",
-                "/register",
-                "/signup/**",
-                "/sellers/**",
-                "/shops/**",
-                "/shop_products/**",
-                "/products/**"
-            )
+            .antMatchers("/h2/**", "/login", "/register", "/signup/**", "/products/**")
             .permitAll()
             // Our private endpoints
             .antMatchers("/actuator/**")
@@ -84,16 +67,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticated();
 
         // Add JWT token filter
-        http.addFilterBefore(
-                jwtTokenFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         // Enable iframe rendering for H2 console
         http.headers().frameOptions().sameOrigin();
     }
 
-    @Override @Bean
+    @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

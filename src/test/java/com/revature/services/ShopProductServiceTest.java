@@ -3,7 +3,6 @@ package com.revature.services;
 import com.revature.driver.DartCartApplication;
 import com.revature.models.*;
 import com.revature.repositories.ShopProductRepo;
-import com.revature.repositories.UserRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -24,6 +22,7 @@ public class ShopProductServiceTest
 {
         final private Seller mockSeller = new Seller(
                 1,
+                "name",
                 "test.com",
                 "desc",
                 null
@@ -69,8 +68,8 @@ public class ShopProductServiceTest
             ArrayList<ShopProduct> testList = new ArrayList<>();
             testList.add(mockShopProduct);
             Mockito.when(mockShopProductRepo.findByProduct(mockShopProduct.getProduct())).thenReturn(testList);
-            Mockito.when(mockShopProductRepo.findById(mockShopProduct.getShop_product_id())).thenReturn(Optional.of(mockShopProduct));
+            Mockito.when(mockShopProductRepo.findById(mockShopProduct.getId())).thenReturn(Optional.of(mockShopProduct));
 
-            Assertions.assertEquals(new ShopProductResponse(mockShopProduct.getShop_product_id(),mockShop.getId(),mockProduct,mockShopProduct.getPrice(),mockShop.getLocation(),mockShopProduct.getDiscount(),mockShopProduct.getQuantity(),mockSeller.getDescription()),mockShopService.getSellersForProduct(mockShopProduct.getShop_product_id()).get(0));
+            Assertions.assertEquals(new ShopProductResponse(mockShopProduct.getId(),mockShop.getId(),mockProduct,mockShopProduct.getPrice(),mockShop.getLocation(),mockShopProduct.getDiscount(),mockShopProduct.getQuantity(),mockSeller.getDescription()),mockShopService.getSellersForProduct(mockShopProduct.getId()).get(0));
         }
 }

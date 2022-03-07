@@ -1,18 +1,11 @@
 package com.revature.unit.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import com.revature.driver.DartCartApplication;
 import com.revature.models.Category;
 import com.revature.models.Product;
 import com.revature.models.Shop;
 import com.revature.models.ShopProduct;
 import com.revature.services.ShopProductServiceImpl;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,6 +20,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
 public class ShopProductControllersTests {
@@ -39,53 +38,48 @@ public class ShopProductControllersTests {
     @MockBean
     private ShopProductServiceImpl sps;
 
+
     @BeforeEach
-    void setup() {
+    void setup(){
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    private static final Shop shop = new Shop();
+    final static private Shop shop = new Shop();
 
-    static final ShopProduct testShopProduct = new ShopProduct(
-        1,
-        20,
-        50,
-        0,
-        shop,
-        new Product(
+    final static ShopProduct testShopProduct = new ShopProduct(
             1,
-            "testProduct",
-            "testDescription",
-            new ArrayList<Category>(Arrays.asList(new Category(1, "testCategory")))
-        )
+            20,
+            50,
+            0,
+            shop,
+            new Product(1,
+                    "testProduct",
+                    "testDescription",
+                    new ArrayList<Category>(Arrays.asList(new Category(1, "testCategory"))))
     );
 
-    static final ShopProduct testShopProduct2 = new ShopProduct(
-        1,
-        30,
-        70,
-        2,
-        shop,
-        new Product(
+    final static ShopProduct testShopProduct2 = new ShopProduct(
+            1,
+            30,
+            70,
             2,
-            "testProduct2",
-            "testDescription2",
-            new ArrayList<Category>(Arrays.asList(new Category(2, "testCategory2")))
-        )
+            shop,
+            new Product(2,
+                    "testProduct2",
+                    "testDescription2",
+                    new ArrayList<Category>(Arrays.asList(new Category(2, "testCategory2"))))
     );
 
-    static final ShopProduct testShopProduct3 = new ShopProduct(
-        1,
-        90,
-        10,
-        5,
-        shop,
-        new Product(
-            3,
-            "testProduct3",
-            "testDescription3",
-            new ArrayList<Category>(Arrays.asList(new Category(3, "testCategory3")))
-        )
+    final static ShopProduct testShopProduct3 = new ShopProduct(
+            1,
+            90,
+            10,
+            5,
+            shop,
+            new Product(3,
+                    "testProduct3",
+                    "testDescription3",
+                    new ArrayList<Category>(Arrays.asList(new Category(3, "testCategory3"))))
     );
 
     @Test
@@ -115,5 +109,25 @@ public class ShopProductControllersTests {
         ra.andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(testShopProduct));
         ra.andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(testShopProduct2));
         ra.andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(testShopProduct3));
+    }
+
+    // This test needs work
+    @Test
+    void searchProductByCategory() throws Exception {
+
+        List<Product> products = new ArrayList<>();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        Product product = new Product(1, "Kelloggs Froot Loops", "Delicious frooty flava",categories );
+        products.add(product);
+
+        Mockito.when(sps.getByProductCategory(null, "Food")).thenReturn(products);
+        ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.get("/shop_products/search?category=Food"));
+        resultActions.andExpectAll(
+                (MockMvcResultMatchers.jsonPath("$[0]").value(product)),
+                (MockMvcResultMatchers.status().isOk())
+        );
     }
 }

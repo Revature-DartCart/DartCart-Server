@@ -2,11 +2,12 @@ package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import java.util.List;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * This class represents a User entity in the database.
@@ -16,9 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(name = "graph.UserCartItems", attributeNodes = @NamedAttributeNode("itemList"))
+@NamedEntityGraph(
+        name = "graph.UserCartItems",
+        attributeNodes = @NamedAttributeNode("itemList")
+)
 @Table(name = "Users")
 public class User {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -55,4 +61,7 @@ public class User {
     @JoinColumn(name = "cart_item_id")
     @JsonIgnore
     private List<CartItem> itemList;
+    public User(int id){
+        this.id = id;
+    }
 }
