@@ -5,6 +5,7 @@ import com.revature.models.Category;
 import com.revature.models.Product;
 import com.revature.models.Shop;
 import com.revature.models.ShopProduct;
+import com.revature.repositories.ProductRepo;
 import com.revature.services.ShopProductService;
 import com.revature.services.ShopProductServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -27,6 +28,9 @@ import static org.mockito.Mockito.when;
 public class ShopProductServicesTests {
     @Autowired
     private ShopProductService shopProductService;
+
+    @MockBean
+    private ProductRepo productRepo;
 
     @MockBean
     private ShopProductRepo shopProductRepo;
@@ -171,5 +175,23 @@ public class ShopProductServicesTests {
 
         assertNotEquals(testList.size(), shopProductList.size());
     }
+
+    @Test
+    void getByCategory(){
+        List<Product> products = new ArrayList<>();
+        Category category = new Category(1, "Food");
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        Product product = new Product(1, "Loops", "Delicious frooty flava",categories );
+        products.add(product);
+
+        when(productRepo.findAll()).thenReturn(products);
+        List<Product> allProducts = shopProductService.getByProductCategory(null,"Food");
+        List<Product> allProducts2 = shopProductService.getByProductCategory(null, "Categories");
+        assertEquals(products.get(0).getName(), allProducts.get(0).getName());
+        assertNotEquals(allProducts.size(), allProducts2.size());
+    }
+
 
 }

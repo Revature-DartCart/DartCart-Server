@@ -1,7 +1,10 @@
 package com.revature.services;
 
+
 import com.revature.models.Seller;
 import com.revature.models.Shop;
+import com.revature.models.Product;
+
 import com.revature.models.ShopProduct;
 import com.revature.models.ShopProductResponse;
 
@@ -31,4 +34,6 @@ public interface ShopProductService {
      * @return A list of all Sop Products that contain the search string in their name
      */
     List<ShopProduct> searchByProductName(String searchString);
+
+    List<Product> getByProductCategory(String name, String category);
 }
