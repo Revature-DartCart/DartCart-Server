@@ -2,12 +2,11 @@ package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import java.util.List;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.List;
 
 /**
  * This class represents a User entity in the database.
@@ -18,50 +17,49 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @NamedEntityGraph(
-        name = "graph.UserCartItems",
-        attributeNodes = @NamedAttributeNode("itemList")
+  name = "graph.UserCartItems",
+  attributeNodes = @NamedAttributeNode("itemList")
 )
 @Table(name = "users")
 public class User {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "user_id")
+  private int id;
 
+  @NotNull
+  @Column(unique = true)
+  private String username;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private int id;
+  @NotNull
+  private String password;
 
-    @NotNull
-    @Column(unique = true)
-    private String username;
+  @NotNull
+  private String firstName;
 
-    @NotNull
-    private String password;
+  @NotNull
+  private String lastName;
 
-    @NotNull
-    private String firstName;
+  @NotNull
+  private String email;
 
-    @NotNull
-    private String lastName;
+  @NotNull
+  private String phone;
 
-    @NotNull
-    private String email;
+  @NotNull
+  private String location;
 
-    @NotNull
-    private String phone;
+  @NotNull
+  private long registrationDate;
 
-    @NotNull
-    private String location;
+  // Returns items in both cart and wishlist
+  // Filter by CartItem's saved field to separate the lists
+  @OneToMany
+  @JoinColumn(name = "cart_item_id")
+  @JsonIgnore
+  private List<CartItem> itemList;
 
-    @NotNull
-    private long registrationDate;
-
-    // Returns items in both cart and wishlist
-    // Filter by CartItem's saved field to separate the lists
-    @OneToMany
-    @JoinColumn(name = "cart_item_id")
-    @JsonIgnore
-    private List<CartItem> itemList;
-    public User(int id){
-        this.id = id;
-    }
+  public User(int id) {
+    this.id = id;
+  }
 }

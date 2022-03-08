@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InvoiceRepo extends CrudRepository<Invoice, Integer> {
-
-    Iterable<Invoice> findAllByShopId(int id);
-
+  Iterable<Invoice> findAllByShopId(int id);
 }

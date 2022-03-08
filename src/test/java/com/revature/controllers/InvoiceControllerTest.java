@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.revature.driver.DartCartApplication;
 import com.revature.services.InvoiceService;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,45 +15,54 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
+@SpringBootTest(
+  webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+  classes = DartCartApplication.class
+)
 public class InvoiceControllerTest {
+  private MockMvc mvc;
 
-    private MockMvc mvc;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @MockBean
+  private InvoiceService mockInvoiceService;
 
-    @MockBean
-    private InvoiceService mockInvoiceService;
+  @BeforeEach
+  void setup() {
+    mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
 
-    @BeforeEach
-    void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+  @Test
+  void getInvoiceByUsername_Test() throws Exception {
+    Mockito
+      .when(mockInvoiceService.getInvoiceByCustomerId(1))
+      .thenReturn(new ArrayList<>());
 
-    @Test
-    void getInvoiceByUsername_Test() throws Exception {
-        Mockito.when(mockInvoiceService.getInvoiceByCustomerId(1)).thenReturn(new ArrayList<>());
+    mvc
+      .perform(MockMvcRequestBuilders.get("/invoices/customer/1"))
+      .andExpect(MockMvcResultMatchers.status().isOk());
+  }
 
-        mvc.perform(MockMvcRequestBuilders.get("/invoices/customer/1")).
-                andExpect(MockMvcResultMatchers.status().isOk());
-    }
+  @Test
+  void getAllInvoicesBySellerId_Test() throws Exception {
+    Mockito
+      .when(mockInvoiceService.getAllInvoicesBySellerId(1))
+      .thenReturn(new ArrayList<>());
 
-    @Test
-    void getAllInvoicesBySellerId_Test() throws Exception {
-        Mockito.when(mockInvoiceService.getAllInvoicesBySellerId(1)).thenReturn(new ArrayList<>());
+    mvc
+      .perform(MockMvcRequestBuilders.get("/invoices/seller/1"))
+      .andExpect(MockMvcResultMatchers.status().isOk());
+  }
 
-        mvc.perform(MockMvcRequestBuilders.get("/invoices/seller/1")).
-                andExpect(MockMvcResultMatchers.status().isOk());
-    }
+  @Test
+  void getAllInvoicesByShopId_Test() throws Exception {
+    Mockito
+      .when(mockInvoiceService.getInvoicesByShopId(1))
+      .thenReturn(new ArrayList<>());
 
-    @Test
-    void getAllInvoicesByShopId_Test() throws Exception {
-        Mockito.when(mockInvoiceService.getInvoicesByShopId(1)).thenReturn(new ArrayList<>());
-
-        mvc.perform(MockMvcRequestBuilders.get("/invoices/shop/1")).
-                andExpect(MockMvcResultMatchers.status().isOk());
-    }
+    mvc
+      .perform(MockMvcRequestBuilders.get("/invoices/shop/1"))
+      .andExpect(MockMvcResultMatchers.status().isOk());
+  }
 }
