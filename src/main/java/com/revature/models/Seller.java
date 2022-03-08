@@ -1,6 +1,7 @@
 package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,4 @@ public class Seller {
     @JoinColumn(name="user_id")
     @JsonBackReference
     private User user;
-
-
 }
