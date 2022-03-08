@@ -26,117 +26,138 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @SpringBootTest(classes = DartCartApplication.class)
 public class JwtFilterTest {
-    private static final String CLASSNAME = "com.revature.utilities.JwtTokenFilter";
-    private static final String DOFILTER = "doFilterInternal";
-    private static Object tokenFilter;
-    private static Method doFilterInternal;
+  private static final String CLASSNAME =
+    "com.revature.utilities.JwtTokenFilter";
+  private static final String DOFILTER = "doFilterInternal";
+  private static Object tokenFilter;
+  private static Method doFilterInternal;
 
-    @MockBean
-    private static JwtTokenUtil jwtTokenUtil;
+  @MockBean
+  private static JwtTokenUtil jwtTokenUtil;
 
-    @MockBean
-    private static UserRepo userRepo;
+  @MockBean
+  private static UserRepo userRepo;
 
-    @BeforeAll
-    static void testSetup(@Autowired ApplicationContext app) {
-        try {
-            tokenFilter = app.getBean(Class.forName(CLASSNAME));
-            doFilterInternal =
-                tokenFilter
-                    .getClass()
-                    .getDeclaredMethod(
-                        DOFILTER,
-                        HttpServletRequest.class,
-                        HttpServletResponse.class,
-                        FilterChain.class
-                    );
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Class: " + CLASSNAME + " needs to be implemented", e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Method: " + DOFILTER + " needs to be implemented", e);
-        }
+  @BeforeAll
+  static void testSetup(@Autowired ApplicationContext app) {
+    try {
+      tokenFilter = app.getBean(Class.forName(CLASSNAME));
+      doFilterInternal =
+        tokenFilter
+          .getClass()
+          .getDeclaredMethod(
+            DOFILTER,
+            HttpServletRequest.class,
+            HttpServletResponse.class,
+            FilterChain.class
+          );
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(
+        "Class: " + CLASSNAME + " needs to be implemented",
+        e
+      );
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(
+        "Method: " + DOFILTER + " needs to be implemented",
+        e
+      );
     }
+  }
 
-    @Test
-    //@ParameterizedTest
-    void tokenDNE() throws InvocationTargetException, IllegalAccessException {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain mockChain = new MockFilterChain();
+  @Test
+  //@ParameterizedTest
+  void tokenDNE() throws InvocationTargetException, IllegalAccessException {
+    MockHttpServletRequest request = new MockHttpServletRequest();
+    MockHttpServletResponse response = new MockHttpServletResponse();
+    MockFilterChain mockChain = new MockFilterChain();
 
-        request.addHeader(HttpHeaders.AUTHORIZATION, "invalid");
-        doFilterInternal.invoke(tokenFilter, request, response, mockChain);
+    request.addHeader(HttpHeaders.AUTHORIZATION, "invalid");
+    doFilterInternal.invoke(tokenFilter, request, response, mockChain);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        assertNull(authentication);
-    }
+    Authentication authentication = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    assertNull(authentication);
+  }
 
-    @Test
-    void tokenInvalid() throws InvocationTargetException, IllegalAccessException {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain mockChain = new MockFilterChain();
+  @Test
+  void tokenInvalid() throws InvocationTargetException, IllegalAccessException {
+    MockHttpServletRequest request = new MockHttpServletRequest();
+    MockHttpServletResponse response = new MockHttpServletResponse();
+    MockFilterChain mockChain = new MockFilterChain();
 
-        request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer exampleToken");
-        Mockito.when(jwtTokenUtil.validate("exampleToken")).thenReturn(false);
+    request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer exampleToken");
+    Mockito.when(jwtTokenUtil.validate("exampleToken")).thenReturn(false);
 
-        doFilterInternal.invoke(tokenFilter, request, response, mockChain);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        assertNull(authentication);
-    }
+    doFilterInternal.invoke(tokenFilter, request, response, mockChain);
+    Authentication authentication = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    assertNull(authentication);
+  }
 
-    @Test
-    void usernameInvalid() throws InvocationTargetException, IllegalAccessException {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain mockChain = new MockFilterChain();
+  @Test
+  void usernameInvalid()
+    throws InvocationTargetException, IllegalAccessException {
+    MockHttpServletRequest request = new MockHttpServletRequest();
+    MockHttpServletResponse response = new MockHttpServletResponse();
+    MockFilterChain mockChain = new MockFilterChain();
 
-        request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer exampleToken");
-        Mockito.when(jwtTokenUtil.validate("exampleToken")).thenReturn(true);
+    request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer exampleToken");
+    Mockito.when(jwtTokenUtil.validate("exampleToken")).thenReturn(true);
 
-        Mockito.when(jwtTokenUtil.getUsername("exampleToken")).thenReturn("invalidName");
-        Mockito.when(userRepo.findByUsername("invalidName")).thenReturn(null);
+    Mockito
+      .when(jwtTokenUtil.getUsername("exampleToken"))
+      .thenReturn("invalidName");
+    Mockito.when(userRepo.findByUsername("invalidName")).thenReturn(null);
 
-        doFilterInternal.invoke(tokenFilter, request, response, mockChain);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        assertNull(authentication);
-    }
+    doFilterInternal.invoke(tokenFilter, request, response, mockChain);
+    Authentication authentication = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    assertNull(authentication);
+  }
 
-    @Test
-    public void testIsAuthenticated() throws InvocationTargetException, IllegalAccessException {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain mockChain = new MockFilterChain();
+  @Test
+  public void testIsAuthenticated()
+    throws InvocationTargetException, IllegalAccessException {
+    MockHttpServletRequest request = new MockHttpServletRequest();
+    MockHttpServletResponse response = new MockHttpServletResponse();
+    MockFilterChain mockChain = new MockFilterChain();
 
-        request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer exampleToken");
-        Mockito.when(jwtTokenUtil.validate("exampleToken")).thenReturn(true);
+    request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer exampleToken");
+    Mockito.when(jwtTokenUtil.validate("exampleToken")).thenReturn(true);
 
-        Mockito.when(jwtTokenUtil.getUsername("exampleToken")).thenReturn("validName");
-        Mockito
-            .when(userRepo.findByUsername("validName"))
-            .thenReturn(
-                new User(
-                    1,
-                    "admin",
-                    "pass",
-                    "Bob",
-                    "Latency",
-                    "Bob@Babbo.com",
-                    "555 555 5555",
-                    "Address",
-                    0L,
-                    new ArrayList<>()
-                )
-            );
+    Mockito
+      .when(jwtTokenUtil.getUsername("exampleToken"))
+      .thenReturn("validName");
+    Mockito
+      .when(userRepo.findByUsername("validName"))
+      .thenReturn(
+        new User(
+          1,
+          "admin",
+          "pass",
+          "Bob",
+          "Latency",
+          "Bob@Babbo.com",
+          "555 555 5555",
+          "Address",
+          0L,
+          new ArrayList<>()
+        )
+      );
 
-        doFilterInternal.invoke(tokenFilter, request, response, mockChain);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        assertNotNull(authentication);
-        assertTrue(authentication.isAuthenticated());
-    }
+    doFilterInternal.invoke(tokenFilter, request, response, mockChain);
+    Authentication authentication = SecurityContextHolder
+      .getContext()
+      .getAuthentication();
+    assertNotNull(authentication);
+    assertTrue(authentication.isAuthenticated());
+  }
 
-    @AfterEach
-    public void clearSecurityContext() {
-        SecurityContextHolder.clearContext();
-    }
+  @AfterEach
+  public void clearSecurityContext() {
+    SecurityContextHolder.clearContext();
+  }
 }

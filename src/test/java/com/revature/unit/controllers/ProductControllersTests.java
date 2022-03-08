@@ -23,40 +23,43 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
+@SpringBootTest(
+  webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+  classes = DartCartApplication.class
+)
 public class ProductControllersTests {
-    @Autowired
-    private MockMvc mvc;
+  @Autowired
+  private MockMvc mvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @MockBean
-    private ProductServiceImpl ps;
+  @MockBean
+  private ProductServiceImpl ps;
 
-    @BeforeEach
-    void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+  @BeforeEach
+  void setup() {
+    mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
 
-    static final Product testProduct = new Product(
-        1,
-        "testProduct",
-        "testDescription",
-        new ArrayList<Category>(Arrays.asList(new Category(1, "testCategory")))
-    );
+  static final Product testProduct = new Product(
+    1,
+    "testProduct",
+    "testDescription",
+    new ArrayList<Category>(Arrays.asList(new Category(1, "testCategory")))
+  );
 
-    @Test
-    public void testGetProductByIdSuccess() throws Exception {
-        Mockito.when(ps.getProductById(1)).thenReturn(Optional.of(testProduct));
-        ResultActions ra = mvc.perform(MockMvcRequestBuilders.get("/products/1"));
-        ra.andExpect(MockMvcResultMatchers.status().isOk());
-    }
+  @Test
+  public void testGetProductByIdSuccess() throws Exception {
+    Mockito.when(ps.getProductById(1)).thenReturn(Optional.of(testProduct));
+    ResultActions ra = mvc.perform(MockMvcRequestBuilders.get("/products/1"));
+    ra.andExpect(MockMvcResultMatchers.status().isOk());
+  }
 
-    @Test
-    public void testGetProductByIdFail() throws Exception {
-        Mockito.when(ps.getProductById(3)).thenReturn(Optional.empty());
-        ResultActions ra = mvc.perform(MockMvcRequestBuilders.get("/products/3"));
-        ra.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
+  @Test
+  public void testGetProductByIdFail() throws Exception {
+    Mockito.when(ps.getProductById(3)).thenReturn(Optional.empty());
+    ResultActions ra = mvc.perform(MockMvcRequestBuilders.get("/products/3"));
+    ra.andExpect(MockMvcResultMatchers.status().isNotFound());
+  }
 }

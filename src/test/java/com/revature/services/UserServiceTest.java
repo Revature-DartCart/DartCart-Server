@@ -15,7 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
+@SpringBootTest(
+  webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+  classes = DartCartApplication.class
+)
 class UserServiceTest {
     private final User mockUser = new User(
         1,
@@ -30,22 +33,24 @@ class UserServiceTest {
         null
     );
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @MockBean
-    private UserRepo mockUserRepo;
+  @MockBean
+  private UserRepo mockUserRepo;
 
-    @Autowired
-    private UserService mockUserService;
+  @Autowired
+  private UserService mockUserService;
 
-    @Autowired
-    BCryptPasswordEncoder bCryptEncoder;
+  @Autowired
+  BCryptPasswordEncoder bCryptEncoder;
 
-    @BeforeEach
-    void setup() {
-        MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+  @BeforeEach
+  void setup() {
+    MockMvc mvc = MockMvcBuilders
+      .webAppContextSetup(webApplicationContext)
+      .build();
+  }
 
     @Test
     void givenUser_whenAddUser_thenAddNewUser() {

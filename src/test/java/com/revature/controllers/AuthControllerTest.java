@@ -19,34 +19,40 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @SpringBootTest(classes = DartCartApplication.class)
 public class AuthControllerTest {
-    @Autowired
-    MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-    @Test
-    public void testLoginHappy() throws Exception {
-        String url = "/login";
-        User user = new User("test", "test", new ArrayList<>());
-        //... more
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String requestJson = ow.writeValueAsString(user);
+  @Test
+  public void testLoginHappy() throws Exception {
+    String url = "/login";
+    User user = new User("test", "test", new ArrayList<>());
+    //... more
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+    String requestJson = ow.writeValueAsString(user);
 
-        mockMvc.perform(post(url).contentType(APPLICATION_JSON_UTF8).content(requestJson)).andExpect(status().isOk());
-    }
+    mockMvc
+      .perform(
+        post(url).contentType(APPLICATION_JSON_UTF8).content(requestJson)
+      )
+      .andExpect(status().isOk());
+  }
 
-    @Test
-    public void testLoginUnhappy() throws Exception {
-        String url = "/login";
-        User user = new User("test", "test1", new ArrayList<>());
-        //... more
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String requestJson = ow.writeValueAsString(user);
+  @Test
+  public void testLoginUnhappy() throws Exception {
+    String url = "/login";
+    User user = new User("test", "test1", new ArrayList<>());
+    //... more
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+    String requestJson = ow.writeValueAsString(user);
 
-        mockMvc
-            .perform(post(url).contentType(APPLICATION_JSON_UTF8).content(requestJson))
-            .andExpect(status().isUnauthorized());
-    }
+    mockMvc
+      .perform(
+        post(url).contentType(APPLICATION_JSON_UTF8).content(requestJson)
+      )
+      .andExpect(status().isUnauthorized());
+  }
 }
