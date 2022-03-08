@@ -30,11 +30,14 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = DartCartApplication.class)
 class UserControllerTest {
-  private MockMvc mvc;
-  ObjectMapper mapper = new ObjectMapper();
+    private MockMvc mvc;
+    ObjectMapper mapper = new ObjectMapper();
 
-  @Autowired
-  private WebApplicationContext webApplicationContext;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @MockBean
+    private UserService mockUserService;
 
     @MockBean
     private CheckoutService mockCheckoutService;
@@ -57,8 +60,8 @@ class UserControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
     }
 
-  @Test
-  void newUser() throws Exception {
+    @Test
+    void newUser() throws Exception {
     Mockito.when(mockUserService.addUser(mockUser)).thenReturn(mockUser);
 
     mvc
@@ -69,10 +72,10 @@ class UserControllerTest {
           .content(mapper.writeValueAsString(mockUser))
       )
       .andExpect(MockMvcResultMatchers.status().isOk());
-  }
+    }
 
-  @Test
-  void testNewUserFail() throws Exception {
+    @Test
+    void testNewUserFail() throws Exception {
     Mockito.when(mockUserService.addUser(new User())).thenReturn(new User());
     mvc
       .perform(
@@ -82,15 +85,6 @@ class UserControllerTest {
           .content(mapper.writeValueAsString(new User()))
       )
       .andExpect(MockMvcResultMatchers.status().isBadRequest());
-  }
-
-    @Test
-    void testNewUserFail() throws Exception {
-        when(mockUserService.addUser(new User())).thenReturn(new User());
-        mvc.perform(MockMvcRequestBuilders.post("/register").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(mapper.writeValueAsString(new User()))).
-                andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test

@@ -11,19 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 @NonNullApi
 public interface UserRepo extends CrudRepository<User, Integer> {
-  @EntityGraph(value = "graph.UserCartItems")
-  //    @Query("SELECT u FROM USERS u WHERE lower(n.username) = lower(?1)")
-  public User findByUsername(String username);
 
   public User findByUsername(String username);
 
   @Override
   @EntityGraph(value = "graph.UserCartItems")
   public <S extends User> S save(S entity);
-
-  @Override
-  @EntityGraph(value = "graph.UserCartItems")
-  public <S extends User> Iterable<S> saveAll(Iterable<S> entities);
 
   @Override
   @EntityGraph(value = "graph.UserCartItems")

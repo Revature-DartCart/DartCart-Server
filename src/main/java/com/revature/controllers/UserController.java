@@ -22,9 +22,6 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 public class UserController {
-  @Autowired
-  UserService userService;
-
     @Autowired
     UserService userService;
 

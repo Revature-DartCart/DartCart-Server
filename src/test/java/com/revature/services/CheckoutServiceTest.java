@@ -65,7 +65,7 @@ public class CheckoutServiceTest {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderDetails.add(new OrderDetail(1, 100, "test product", "test description", 3));
         orderDetails.add(new OrderDetail(1, 100, "test2 product", "test2 description", 3));
-        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, shop, orderDetails);
+        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, orderDetails, shop);
 
         // get current cart for confirmation
         when(userRepo.findById(user.getId())).thenReturn(Optional.of(user));
@@ -177,7 +177,7 @@ public class CheckoutServiceTest {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderDetails.add(new OrderDetail(1, 100, "test product", "test description", 3));
         orderDetails.add(new OrderDetail(1, 100, "test2 product", "test2 description", 3));
-        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, shop, orderDetails);
+        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, orderDetails, shop);
 
         // get current cart for confirmation
         when(userRepo.findById(user.getId())).thenReturn(Optional.of(user));
