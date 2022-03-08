@@ -20,18 +20,18 @@ import org.springframework.web.context.WebApplicationContext;
   classes = DartCartApplication.class
 )
 class UserServiceTest {
-  private final User mockUser = new User(
-    1,
-    "test1",
-    "password",
-    "Test",
-    "User",
-    "test1@DartCart.net",
-    "123-456-7890",
-    "1 Test Street, Test Town, Testonia 12345",
-    123563672L,
-    null
-  );
+    private final User mockUser = new User(
+        1,
+        "test1",
+        "password",
+        "Test",
+        "User",
+        "test1@DartCart.net",
+        "123-456-7890",
+        "1 Test Street, Test Town, Testonia 12345",
+        123563672L,
+        null
+    );
 
   @Autowired
   private WebApplicationContext webApplicationContext;
@@ -52,11 +52,11 @@ class UserServiceTest {
       .build();
   }
 
-  @Test
-  void givenUser_whenAddUser_thenAddNewUser() {
-    User encrypted = mockUser;
-    encrypted.setPassword(bCryptEncoder.encode(encrypted.getPassword()));
-    Mockito.when(mockUserRepo.save(mockUser)).thenReturn(encrypted);
-    Assertions.assertEquals(encrypted, mockUserService.addUser(mockUser));
-  }
+    @Test
+    void givenUser_whenAddUser_thenAddNewUser() {
+        User encrypted = mockUser;
+        encrypted.setPassword(bCryptEncoder.encode(encrypted.getPassword()));
+        Mockito.when(mockUserRepo.save(mockUser)).thenReturn(encrypted);
+        Assertions.assertEquals(encrypted, mockUserService.addUser(mockUser));
+    }
 }
