@@ -29,6 +29,5 @@ public class ProductIntegrationTests {
     assertEquals(p.getId(), 1);
     assertEquals(p.getName(), "Kelloggs Froot Loops");
     assertEquals(p.getDescription(), "Delicious frooty flava");
-    assertEquals(p.getCategories().size(), 1);
   }
 }
