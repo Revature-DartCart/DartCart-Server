@@ -86,11 +86,4 @@ class ShopServiceTest {
         Mockito.doThrow(new IllegalArgumentException()).when(sr).deleteById(0);
         Assertions.assertFalse(mockShopService.deleteShop(0));
     }
-
-    @Test
-    void getShopBySellerId()
-    {
-        Mockito.when(sr.findBySellerId(mockSeller.getId())).thenReturn(Optional.of(mockShop));
-        Assertions.assertEquals(mockShop,mockShopService.getShopBySellerId(mockSeller.getId()).get());
-    }
 }
