@@ -12,7 +12,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'HughTheMann',
-    '16e168e4cb8c6921dc2bb3f1e11c87a12b4fa3c750ca14efeb7f8870ab611971',
+    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
     'Hugh',
     'Mann',
     'hughmanntheman@gmail.com',
@@ -35,7 +35,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Sammykins',
-    '3e4463134cf818db84a14d750b86603aa0611b1989c337d4bc9f0a14e3a08bb1',
+    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
     'Samantha',
     'Mann',
     'sammannnotthefish@gmail.com',
@@ -58,7 +58,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Caesar92',
-    'ac9ef06fa6d05293997edd051dee190ae657e5033a612b6977fe0fd6b227d99e',
+    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
     'Roe',
     'Mann',
     'thedieiscastxd@gmail.com',
@@ -81,7 +81,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'JerManny',
-    'bb45d85472de2bff5e1801cf09d3b0b5121a29e5e71bc128f1621ccf9d9d410f',
+    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
     'Jer',
     'Mann',
     'jermanny@gmail.com',
@@ -138,42 +138,46 @@ VALUES (
     'ALSO THE BEST SELLER!!!',
     4
 );
-
-INSERT INTO Shops (
-    shop_id,
-    location,
-    seller_id
-)
-VALUES (
-    DEFAULT,
-    'ADDRESS',
-    1
-);
-
-INSERT INTO Shops (
-    shop_id,
-    location,
-    seller_id
-)
-VALUES (
-    DEFAULT,
-    'ADDRESS 2',
-    2
-);
-
 INSERT INTO Products (product_id, name, description) VALUES
 (1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
 
 
-INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id, shop_id) VALUES
-(1, 10, 15, 2, 1, 1);
+INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
+(1, 10, 15, 2, 1),
+(2, 10, 15, 2, 1);
 
-INSERT INTO Categories (category_id, name) VALUES
-(1, 'Toys'),
-(2, 'Clothing'),
-(3, 'Furniture'),
-(4, 'Entertainment'),
-(5, 'Automotive'),
-(6, 'Home Goods'),
-(7, 'School & Office'),
-(8, 'Personal Care');
+INSERT INTO Categories (category_id, name) VALUES (1, 'Food');
+
+INSERT INTO Product_Category (product_id, category_id) VALUES
+(1, 1);
+
+INSERT INTO Shops VALUES
+(default, 'Heaven', 1),
+(default, 'Hell', 2);
+
+INSERT INTO Invoices VALUES
+(default, 1646419824936, 'Heaven', 'Some Address', 1, 1),
+(default, 1646419824936, 'Hell', 'Some Address', 1, 2),
+(default, 1646419824936, 'Heaven', 'Some Address', 2, 1),
+(default, 1646419824936, 'Hell', 'Some Address', 2, 2),
+(default, 1646419824936, 'Heaven', 'Some Address', 3, 1),
+(default, 1646419824936, 'Hell', 'Some Address', 3, 2),
+(default, 1646419824936, 'Heaven', 'Some Address', 4, 1),
+(default, 1646419824936, 'Hell', 'Some Address', 4, 2),
+(default, 1646419824936, 'Heaven', 'Some Address', 5, 1),
+(default, 1646419824936, 'Hell', 'Some Address', 5, 2);
+
+INSERT INTO Order_Details VALUES
+(default, 15, 'Delicious frooty flava', 'Kelloggs Froot Loops', 1, 1),
+(default, 2, 'Delicious frooty flava', 'Kelloggs Froot Loops', 3, 2),
+(default, 51, 'Delicious frooty flava', 'Kelloggs Froot Loops', 10, 3),
+(default, 107, 'Delicious frooty flava', 'Kelloggs Froot Loops', 105, 4),
+(default, 31, 'Delicious frooty flava', 'Kelloggs Froot Loops', 8, 5),
+(default, 29, 'Delicious frooty flava', 'Kelloggs Froot Loops', 6, 6),
+(default, 37, 'Delicious frooty flava', 'Kelloggs Froot Loops', 5, 7),
+(default, 41, 'Delicious frooty flava', 'Kelloggs Froot Loops', 15, 8),
+(default, 1, 'Delicious frooty flava', 'Kelloggs Froot Loops', 7, 9),
+(default, 139, 'Delicious frooty flava', 'Kelloggs Froot Loops', 107, 10),
+(default, 1300, 'Delicious frooty flava', 'Kelloggs Froot Loops', 107, 10),
+(default, 1500, 'Delicious frooty flava', 'Kelloggs Froot Loops', 107, 10),
+(default, 1250, 'Delicious frooty flava', 'Kelloggs Froot Loops', 5, 10);
