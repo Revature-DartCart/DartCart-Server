@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,11 @@ public class UserController {
     // or return one with items in cart if there was a mismatch
     @PostMapping(value = "/checkout")
     public ResponseEntity<User> checkout(@RequestBody User user) {
+
+        if(user.getItemList().size() == 0) {
+            return new ResponseEntity<>(user, HttpStatus.NOT_ACCEPTABLE);
+        }
+
         try {
             user = checkoutService.checkout(user);
         } catch (BadTransactionException e) {
