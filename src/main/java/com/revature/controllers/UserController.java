@@ -50,7 +50,7 @@ public class UserController {
     public ResponseEntity<User> checkout(@RequestBody User user) {
 
         if(user.getItemList().size() == 0) {
-            return new ResponseEntity<>(user, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
         }
 
         try {
