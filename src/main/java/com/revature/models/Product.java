@@ -1,10 +1,10 @@
 package com.revature.models;
+
+import java.util.List;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.List;
 
 /**
  * This class represents an individual Product.
@@ -14,20 +14,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Products")
+@Table(name = "products")
 public class Product {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "product_id")
+  private int id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private int id;
+  private String name;
 
-    private String name;
+  @Column(length = 1000)
+  private String description;
 
-    @Column(length = 1000)
-    private String description;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="Product_Category", joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+    name = "Product_Category",
+    joinColumns = @JoinColumn(name = "product_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id")
+  )
+  private List<Category> categories;
 }

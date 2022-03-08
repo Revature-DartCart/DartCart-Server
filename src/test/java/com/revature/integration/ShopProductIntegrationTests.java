@@ -1,18 +1,15 @@
 package com.revature.integration;
 
-
 import com.revature.models.ShopProduct;
 import com.revature.repositories.ShopProductRepo;
+import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-
 
 @SpringBootTest(classes = com.revature.driver.DartCartApplication.class)
 @Transactional

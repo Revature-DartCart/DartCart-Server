@@ -4,6 +4,7 @@ import com.revature.exceptions.BadTransactionException;
 import com.revature.models.User;
 import com.revature.services.CheckoutService;
 import com.revature.services.UserService;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 public class UserController {
+  @Autowired
+  UserService userService;
 
     @Autowired
     UserService userService;

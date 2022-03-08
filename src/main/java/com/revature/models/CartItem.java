@@ -1,11 +1,10 @@
 package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 /**
  * This class represents an individual item in the cart or saved by a Customer.
@@ -16,7 +15,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "Cart_Items")
-
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
