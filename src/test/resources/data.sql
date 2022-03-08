@@ -162,7 +162,6 @@ INSERT INTO Product_Category (product_id, category_id) VALUES
 INSERT INTO Cart_Items (cart_item_id, quantity, saved, user_id, shop_product_id) VALUES
 (default, 1, false, 1, 1),
 (default, 1, false, 1, 2);
-(1, 1);
 
 INSERT INTO Shops VALUES
 (default, 'Heaven', 1),

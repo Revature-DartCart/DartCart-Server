@@ -65,6 +65,7 @@ public class CheckoutEndToEndTests {
 
         seller = new Seller(
                 1,
+                "name",
                 "/sellers/bestseller",
                 "THE BEST SELLER!",
                 new User(
