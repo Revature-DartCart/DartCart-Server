@@ -48,7 +48,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public Optional<Seller> getSellerByUserId(int id) {
-        return sr.findByUserId(id);
+        return sellerRepo.findByUserId(id);
     }
 
 

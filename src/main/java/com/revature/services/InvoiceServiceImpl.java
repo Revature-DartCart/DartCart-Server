@@ -19,10 +19,17 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     InvoiceRepo invoiceRepo;
 
+
+
     /**
-     * Gets all invoices through customer id
-     * @return a list of all customer invoices
+     *
+     * @return a list of a customers invoices
      */
+    @Override
+    public List<Invoice> getAllInvoices() {
+        return (List<Invoice>) invoiceRepo.findAll();
+    }
+
     @Override
     public List<Invoice> getInvoiceByCustomerId(int id) {
         List<Invoice> invoices = (List<Invoice>) invoiceRepo.findAll();
@@ -32,4 +39,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
         return generatedInvoice;
     }
+
+
 }

@@ -23,9 +23,16 @@ public class InvoiceController {
     @Autowired
     InvoiceService invoiceService;
 
+    /**
+     *
+     * @param id endpoint for retrieving a customers invoice by id
+     * @return
+     */
     @GetMapping(value = "/invoices/customer/{id}")
-    public List<Invoice> getInvoiceByUsername(@PathVariable("id") String id) {
-        return invoiceService.getInvoiceByCustomerId(Integer.parseInt(id));
+    public ResponseEntity<Invoice> getInvoiceByUsername(@PathVariable("id") String id) {
+            Invoice invoice = (Invoice) invoiceService.getInvoiceByCustomerId(Integer.parseInt(id));
+            return invoice != null ? new ResponseEntity<>(invoice, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 
