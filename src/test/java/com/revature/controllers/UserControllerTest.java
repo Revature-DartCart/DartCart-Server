@@ -53,7 +53,7 @@ class UserControllerTest {
             "123-456-7890",
             "1 Test Street, Test Town, Testonia 12345",
             123563672L,
-            null
+            new ArrayList<>()
     );
 
     @BeforeEach
@@ -105,12 +105,16 @@ class UserControllerTest {
                 new ArrayList<>()
         );
 
-        when(mockCheckoutService.checkout(Mockito.any(user.getClass()))).thenReturn(user);
+        user.getItemList().add(new CartItem(
+                1, 3, false, user, new ShopProduct(
+                1, 5, 100, 100, null, null)));
+
+        when(mockCheckoutService.checkout(Mockito.any(user.getClass()))).thenReturn(mockUser);
 
         mvc.perform(
                 MockMvcRequestBuilders.post("/checkout")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(mockUser)))
+                        .content(mapper.writeValueAsString(user)))
                 .andExpectAll(
                         MockMvcResultMatchers.status().isOk(),
                         MockMvcResultMatchers.jsonPath("$.id").value(1)
@@ -141,7 +145,7 @@ class UserControllerTest {
         mvc.perform(
                 MockMvcRequestBuilders.post("/checkout")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(mockUser)))
+                        .content(mapper.writeValueAsString(user)))
                 .andExpectAll(
                         MockMvcResultMatchers.status().isBadRequest(),
                         MockMvcResultMatchers.jsonPath("$.id").value(1)
@@ -151,11 +155,28 @@ class UserControllerTest {
     @Test
     @WithMockUser("spring")
     public void testUserWithInvalidQuantity() throws Exception {
+        User user = new User(
+                mockUser.getId(),
+                mockUser.getUsername(),
+                mockUser.getPassword(),
+                mockUser.getFirstName(),
+                mockUser.getLastName(),
+                mockUser.getEmail(),
+                mockUser.getPhone(),
+                mockUser.getLocation(),
+                mockUser.getRegistrationDate(),
+                new ArrayList<>()
+        );
+
+        user.getItemList().add(new CartItem(
+                1, 3, false, user, new ShopProduct(
+                1, 5, 100, 100, null, null)));
+
         when(mockCheckoutService.checkout(Mockito.any(User.class))).thenThrow(BadTransactionException.class);
         mvc.perform(
                         MockMvcRequestBuilders.post("/checkout")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(mapper.writeValueAsString(mockUser)))
+                                .content(mapper.writeValueAsString(user)))
                 .andExpectAll(
                         MockMvcResultMatchers.status().isNotAcceptable()
                 );
