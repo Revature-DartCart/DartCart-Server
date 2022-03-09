@@ -31,13 +31,13 @@ public class InvoiceServiceTest {
     all = new ArrayList<>();
 
     all.add(
-      new Invoice(1, 0L, "address", "address", new User(1), new Shop(1), null)
+      new Invoice(1, 0L, "address", "address", new User(1), null, new Shop(1))
     );
     all.add(
-      new Invoice(1, 0L, "address", "address", new User(2), new Shop(2), null)
+      new Invoice(1, 0L, "address", "address", new User(2), null, new Shop(2))
     );
     all.add(
-      new Invoice(1, 0L, "address", "address", new User(3), new Shop(3), null)
+      new Invoice(1, 0L, "address", "address", new User(3), null, new Shop(3))
     );
   }
 

@@ -1,6 +1,6 @@
 package com.revature.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import java.util.List;
 import javax.persistence.*;
@@ -31,8 +31,9 @@ public class Seller {
   private String homepage;
 
   private String description;
-
+  
   @OneToOne
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name="user_id")
+  @JsonBackReference
   private User user;
 }

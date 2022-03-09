@@ -1,6 +1,5 @@
 package com.revature.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import java.util.List;
 import javax.persistence.*;
@@ -54,9 +53,7 @@ public class User {
 
   // Returns items in both cart and wishlist
   // Filter by CartItem's saved field to separate the lists
-  @OneToMany
-  @JoinColumn(name = "cart_item_id")
-  @JsonIgnore
+  @OneToMany(mappedBy = "customer")
   private List<CartItem> itemList;
 
   public User(int id) {

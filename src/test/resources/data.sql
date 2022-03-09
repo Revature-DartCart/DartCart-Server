@@ -138,18 +138,30 @@ VALUES (
     'ALSO THE BEST SELLER!!!',
     4
 );
+
+INSERT INTO Shops (shop_id, location, seller_id) VALUES
+(default, 'location', 1);
+
 INSERT INTO Products (product_id, name, description) VALUES
-(1, 'Kelloggs Froot Loops', 'Delicious frooty flava');
+(1, 'Kelloggs Froot Loops', 'Delicious frooty flava'),
+(2, 'Laptop', 'does computer stuff');
 
 
-INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id) VALUES
-(1, 10, 15, 2, 1),
-(2, 10, 15, 2, 1);
+INSERT INTO Shop_Products (shop_product_id, quantity, price, discount, product_id, shop_id) VALUES
+(1, 10, 15, 2, 1, 1),
+(2, 10, 15, 2, 2, 1);
 
-INSERT INTO Categories (category_id, name) VALUES (1, 'Food');
+INSERT INTO Categories (category_id, name) VALUES
+(1, 'Food'),
+(2, 'Electronics');
 
 INSERT INTO Product_Category (product_id, category_id) VALUES
-(1, 1);
+(1, 1),
+(2, 2);
+
+INSERT INTO Cart_Items (cart_item_id, quantity, saved, user_id, shop_product_id) VALUES
+(default, 1, false, 1, 1),
+(default, 1, false, 1, 2);
 
 INSERT INTO Shops VALUES
 (default, 'Heaven', 1),

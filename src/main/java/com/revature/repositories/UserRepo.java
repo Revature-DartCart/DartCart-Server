@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @NonNullApi
 public interface UserRepo extends CrudRepository<User, Integer> {
-  @EntityGraph(value = "graph.UserCartItems")
-  //    @Query("SELECT u FROM USERS u WHERE lower(n.username) = lower(?1)")
+
   public User findByUsername(String username);
 
   @Override
