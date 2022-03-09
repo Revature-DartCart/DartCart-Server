@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShopProductResponse {
-    private int shop_product_id;
-    private int shop_id;
-    private Product product;
-    private int price;
-    private String location;
-    private int discount;
-    private int quantity;
-    private String sellerDescription;
+  private int id;
+  private Shop shop;
+  private Product product;
+  private int price;
+  private String location;
+  private int discount;
+  private int quantity;
+  private String sellerDescription;
 }
