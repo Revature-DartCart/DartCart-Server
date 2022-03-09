@@ -60,6 +60,7 @@ public class ShopProductServiceTest {
     Mockito
       .when(mockShopProductRepo.findByProduct(mockShopProduct.getProduct()))
       .thenReturn(testList);
+
     Mockito
       .when(mockShopProductRepo.findById(mockShopProduct.getId()))
       .thenReturn(Optional.of(mockShopProduct));
@@ -67,7 +68,7 @@ public class ShopProductServiceTest {
     Assertions.assertEquals(
       new ShopProductResponse(
         mockShopProduct.getId(),
-        mockShop.getId(),
+        mockShop,
         mockProduct,
         mockShopProduct.getPrice(),
         mockShop.getLocation(),
