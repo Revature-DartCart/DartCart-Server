@@ -12,7 +12,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'HughTheMann',
-    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
+    '$2a$12$s4UCH9WnNp.mlt38hqHKbeLVW.YlvoJVcU3HeBumkT54xxV7WTqoO',
     'Hugh',
     'Mann',
     'hughmanntheman@gmail.com',
@@ -35,7 +35,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Sammykins',
-    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
+    '$2a$12$s4UCH9WnNp.mlt38hqHKbeLVW.YlvoJVcU3HeBumkT54xxV7WTqoO',
     'Samantha',
     'Mann',
     'sammannnotthefish@gmail.com',
@@ -58,7 +58,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'Caesar92',
-    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
+    '$2a$12$s4UCH9WnNp.mlt38hqHKbeLVW.YlvoJVcU3HeBumkT54xxV7WTqoO',
     'Roe',
     'Mann',
     'thedieiscastxd@gmail.com',
@@ -81,7 +81,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'JerManny',
-    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
+    '$2a$12$s4UCH9WnNp.mlt38hqHKbeLVW.YlvoJVcU3HeBumkT54xxV7WTqoO',
     'Jer',
     'Mann',
     'jermanny@gmail.com',
@@ -104,7 +104,7 @@ INSERT INTO Users (
 VALUES (
     DEFAULT,
     'test',
-    '$2a$04$vwsthDC7JUu9kfqA264DJenCuUC2ifUcRAGdEUFNrxa/gz9p9rgC2',
+    '$2a$12$s4UCH9WnNp.mlt38hqHKbeLVW.YlvoJVcU3HeBumkT54xxV7WTqoO',
     'Jer',
     'Mann',
     'jermanny@gmail.com',
@@ -117,12 +117,14 @@ INSERT INTO Sellers (
     seller_id,
     homepage,
     description,
+    name,
     user_id
 )
 VALUES (
     DEFAULT,
     '/sellers/bestseller',
     'THE BEST SELLER!',
+    'Seller Numero Uno',
     2
 );
 
@@ -130,12 +132,14 @@ INSERT INTO Sellers (
     seller_id,
     homepage,
     description,
+    name,
     user_id
 )
 VALUES (
     DEFAULT,
     '/sellers/alsobestseller',
     'ALSO THE BEST SELLER!!!',
+    'Seller Numero Dos',
     4
 );
 

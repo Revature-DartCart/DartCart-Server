@@ -2,31 +2,26 @@ package com.revature.services;
 
 import com.revature.exceptions.BadTransactionException;
 import com.revature.models.*;
-import com.revature.repositories.CartItemRepository;
-import com.revature.repositories.InvoiceRepository;
-import com.revature.repositories.ShopProductRepo;
-import com.revature.repositories.UserRepo;
+import com.revature.repositories.*;
+
+import java.util.*;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.*;
-
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
-
     @Autowired
     private UserRepo userRepo;
 
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private CartItemRepo cartItemRepository;
 
     @Autowired
-    private InvoiceRepository invoiceRepository;
+    private InvoiceRepo invoiceRepository;
 
     @Autowired
     private ShopProductRepo shopProductRepo;
-
 
     /**
      * This method receives a User with a full cart of items and compares
@@ -44,15 +39,20 @@ public class CheckoutServiceImpl implements CheckoutService {
     public User checkout(User user) throws BadTransactionException {
         Optional<User> op = userRepo.findById(user.getId());
 
-        if(op.isPresent()) {
+        if (op.isPresent()) {
             User fetchedUser = op.get();
 
             // First check if the posted user has the same data as the database
-            if(user.getItemList().size() == fetchedUser.getItemList().size()) {
+            if (user.getItemList().size() == fetchedUser.getItemList().size()) {
                 Set<Integer> clientCartItemIds = new HashSet<>();
                 user.getItemList().forEach(cartItem -> clientCartItemIds.add(cartItem.getId()));
 
-                if(fetchedUser.getItemList().stream().allMatch(cartItem -> clientCartItemIds.contains(cartItem.getId()))) {
+                if (
+                    fetchedUser
+                        .getItemList()
+                        .stream()
+                        .allMatch(cartItem -> clientCartItemIds.contains(cartItem.getId()))
+                ) {
                     // begin checkout process
                     long date = System.currentTimeMillis();
 
@@ -62,15 +62,15 @@ public class CheckoutServiceImpl implements CheckoutService {
 
                     // This map is used to keep track of updating the quantities in shopproduct
                     Map<Integer, Integer> shopProductModifications = new HashMap<>();
-                    for (CartItem item: fetchedUser.getItemList()) {
+                    for (CartItem item : fetchedUser.getItemList()) {
                         // If we try to purchase more than what's in stock we throw an exception
-                        if(item.getQuantity() > item.getShopProduct().getQuantity()) {
+                        if (item.getQuantity() > item.getShopProduct().getQuantity()) {
                             throw new BadTransactionException();
                         }
 
                         int shopId = item.getShopProduct().getShop().getId();
 
-                        if(!invoiceMap.containsKey(shopId)) {
+                        if (!invoiceMap.containsKey(shopId)) {
                             // create invoice for shop
                             Invoice invoice = new Invoice();
                             invoice.setCustomer(fetchedUser);
@@ -108,10 +108,16 @@ public class CheckoutServiceImpl implements CheckoutService {
                     invoiceMap.values().forEach(invoice -> invoiceRepository.save(invoice));
 
                     // Update quantity on each shopproduct
-                    List<ShopProduct> products = (List<ShopProduct>) shopProductRepo.findAllById(shopProductModifications.keySet());
-                    products.forEach(shopProduct -> {
-                        shopProduct.setQuantity(shopProduct.getQuantity() - shopProductModifications.get(shopProduct.getId()));
-                    });
+                    List<ShopProduct> products = (List<ShopProduct>) shopProductRepo.findAllById(
+                        shopProductModifications.keySet()
+                    );
+                    products.forEach(
+                        shopProduct -> {
+                            shopProduct.setQuantity(
+                                shopProduct.getQuantity() - shopProductModifications.get(shopProduct.getId())
+                            );
+                        }
+                    );
                     shopProductRepo.saveAll(products);
 
                     cartItemRepository.deleteAll();
@@ -135,26 +141,34 @@ public class CheckoutServiceImpl implements CheckoutService {
             resolvedUser.setLocation(fetchedUser.getLocation());
 
             resolvedUser.setItemList(new ArrayList<>());
-            fetchedUser.getItemList().forEach(cartItem -> {
-                ShopProduct shopProduct = new ShopProduct();
-                shopProduct.setShop(cartItem.getShopProduct().getShop());
-                shopProduct.setId(cartItem.getShopProduct().getId());
-                shopProduct.setPrice(cartItem.getShopProduct().getPrice());
-                shopProduct.setQuantity(cartItem.getShopProduct().getQuantity());
-                shopProduct.setDiscount(cartItem.getShopProduct().getDiscount());
+            fetchedUser
+                .getItemList()
+                .forEach(
+                    cartItem -> {
+                        ShopProduct shopProduct = new ShopProduct();
+                        shopProduct.setShop(cartItem.getShopProduct().getShop());
+                        shopProduct.setId(cartItem.getShopProduct().getId());
+                        shopProduct.setPrice(cartItem.getShopProduct().getPrice());
+                        shopProduct.setQuantity(cartItem.getShopProduct().getQuantity());
+                        shopProduct.setDiscount(cartItem.getShopProduct().getDiscount());
 
-                Product product = new Product();
-                product.setId(cartItem.getShopProduct().getProduct().getId());
-                product.setName(cartItem.getShopProduct().getProduct().getName());
-                product.setDescription(cartItem.getShopProduct().getProduct().getDescription());
-                product.setCategories(new ArrayList<>());
-                cartItem.getShopProduct().getProduct().getCategories().forEach(category -> product.getCategories().add(category));
-                shopProduct.setProduct(product);
+                        Product product = new Product();
+                        product.setId(cartItem.getShopProduct().getProduct().getId());
+                        product.setName(cartItem.getShopProduct().getProduct().getName());
+                        product.setDescription(cartItem.getShopProduct().getProduct().getDescription());
+                        product.setCategories(new ArrayList<>());
+                        cartItem
+                            .getShopProduct()
+                            .getProduct()
+                            .getCategories()
+                            .forEach(category -> product.getCategories().add(category));
+                        shopProduct.setProduct(product);
 
-                cartItem.setShopProduct(shopProduct);
-                cartItem.setCustomer(null);
-                resolvedUser.getItemList().add(cartItem);
-            });
+                        cartItem.setShopProduct(shopProduct);
+                        cartItem.setCustomer(null);
+                        resolvedUser.getItemList().add(cartItem);
+                    }
+                );
 
             return fetchedUser; // incoming user data didn't match database
         } else {

@@ -4,7 +4,9 @@ import com.revature.exceptions.BadTransactionException;
 import com.revature.models.User;
 import com.revature.services.CheckoutService;
 import com.revature.services.UserService;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Locale;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -48,8 +47,7 @@ public class UserController {
     // or return one with items in cart if there was a mismatch
     @PostMapping(value = "/checkout")
     public ResponseEntity<User> checkout(@RequestBody User user) {
-
-        if(user.getItemList().size() == 0) {
+        if (user.getItemList().size() == 0) {
             return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
         }
 
@@ -61,7 +59,7 @@ public class UserController {
 
         // if cart is empty checkout succeeded
         // otherwise we return a 400 with the correct cart
-        if(user.getItemList().size() == 0) {
+        if (user.getItemList().size() == 0) {
             return ResponseEntity.of(Optional.of(user));
         } else {
             return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);

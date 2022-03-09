@@ -18,22 +18,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "sellers")
 public class Seller {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "seller_id")
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "seller_id")
+    private int id;
 
-  @NotNull
-  private String name;
+    @NotNull
+    private String name;
 
-  @NotNull
-  @Column(unique = true)
-  private String homepage;
+    @NotNull
+    @Column(unique = true)
+    private String homepage;
 
-  private String description;
-  
-  @OneToOne
-  @JoinColumn(name="user_id")
-  @JsonBackReference
-  private User user;
+    private String description;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 }

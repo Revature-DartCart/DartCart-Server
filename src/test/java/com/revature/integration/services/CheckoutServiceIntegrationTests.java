@@ -1,23 +1,21 @@
 package com.revature.integration.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.revature.driver.DartCartApplication;
 import com.revature.exceptions.BadTransactionException;
 import com.revature.models.*;
 import com.revature.services.CheckoutService;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
 public class CheckoutServiceIntegrationTests {
-
     @Autowired
     private CheckoutService checkoutService;
 
@@ -32,7 +30,8 @@ public class CheckoutServiceIntegrationTests {
 
     @BeforeEach
     public void init() {
-        user = new User(
+        user =
+            new User(
                 1,
                 "HughTheMann",
                 null,
@@ -43,51 +42,23 @@ public class CheckoutServiceIntegrationTests {
                 "address",
                 1645736771148L,
                 new ArrayList<>()
-        );
+            );
 
-        shop = new Shop(
-                1,
-                "location",
-                null
-        );
+        shop = new Shop(1, "location", null);
 
         food = new Category(1, "Food");
         electronics = new Category(2, "Electronics");
 
-        kellogs = new Product(
-                1,
-                "Kelloggs Froot Loops",
-                "Delicious frooty flava",
-                new ArrayList<>()
-        );
+        kellogs = new Product(1, "Kelloggs Froot Loops", "Delicious frooty flava", new ArrayList<>());
         kellogs.getCategories().add(food);
 
-        laptop = new Product(
-                2,
-                "Laptop",
-                "does computer stuff",
-                new ArrayList<>()
-        );
+        laptop = new Product(2, "Laptop", "does computer stuff", new ArrayList<>());
 
         laptop.getCategories().add(electronics);
 
-        shopKellogs = new ShopProduct(
-                1,
-                10,
-                15,
-                2,
-                shop,
-                kellogs
-        );
+        shopKellogs = new ShopProduct(1, 10, 15, 2, shop, kellogs);
 
-        shopLaptop = new ShopProduct(
-                2,
-                10,
-                15,
-                2,
-                shop,
-                laptop
-        );
+        shopLaptop = new ShopProduct(2, 10, 15, 2, shop, laptop);
     }
 
     @Test

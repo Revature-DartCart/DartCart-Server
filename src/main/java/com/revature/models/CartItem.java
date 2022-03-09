@@ -31,7 +31,6 @@ public class CartItem {
     @JsonBackReference
     private User customer;
 
-
     @OneToOne
     @JoinColumn(name = "shop_product_id")
     private ShopProduct shopProduct;

@@ -18,71 +18,65 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest(classes = DartCartApplication.class)
 public class InvoiceServiceTest {
-  @MockBean
-  private InvoiceRepo invoiceRepo;
+    @MockBean
+    private InvoiceRepo invoiceRepo;
 
-  @Autowired
-  private InvoiceService invoiceService;
+    @Autowired
+    private InvoiceService invoiceService;
 
-  private static ArrayList<Invoice> all;
+    private static ArrayList<Invoice> all;
 
-  @BeforeAll
-  public static void setUp() {
-    all = new ArrayList<>();
+    @BeforeAll
+    public static void setUp() {
+        all = new ArrayList<>();
 
-    all.add(
-      new Invoice(1, 0L, "address", "address", new User(1), null, new Shop(1))
-    );
-    all.add(
-      new Invoice(1, 0L, "address", "address", new User(2), null, new Shop(2))
-    );
-    all.add(
-      new Invoice(1, 0L, "address", "address", new User(3), null, new Shop(3))
-    );
-  }
+        all.add(new Invoice(1, 0L, "address", "address", new User(1), null, new Shop(1)));
+        all.add(new Invoice(1, 0L, "address", "address", new User(2), null, new Shop(2)));
+        all.add(new Invoice(1, 0L, "address", "address", new User(3), null, new Shop(3)));
+    }
 
-  @Test
-  public void getAllInvoicesBySellerId_WhenPresent() {
-    Mockito.when(invoiceRepo.findAll()).thenReturn(all);
+    @Test
+    public void getAllInvoicesBySellerId_WhenPresent() {
+        Mockito.when(invoiceRepo.findAll()).thenReturn(all);
 
-    List<Invoice> ret = invoiceService.getAllInvoicesBySellerId(0);
+        List<Invoice> ret = invoiceService.getAllInvoicesBySellerId(0);
 
-    assertEquals(3, ret.size());
-  }
+        assertEquals(3, ret.size());
+    }
 
-  @Test
-  public void getAllInvoicesBySellerId_WhenNotPresent() {
-    Mockito.when(invoiceRepo.findAll()).thenReturn(all);
+    @Test
+    public void getAllInvoicesBySellerId_WhenNotPresent() {
+        Mockito.when(invoiceRepo.findAll()).thenReturn(all);
 
-    List<Invoice> ret = invoiceService.getAllInvoicesBySellerId(1);
+        List<Invoice> ret = invoiceService.getAllInvoicesBySellerId(1);
 
-    assertEquals(0, ret.size());
-  }
+        assertEquals(0, ret.size());
+    }
 
-  @Test
-  public void getInvoiceByCustomerId_WhenNotPresent() {
-    Mockito.when(invoiceRepo.findAll()).thenReturn(all);
+    @Test
+    public void getInvoiceByCustomerId_WhenNotPresent() {
+        Mockito.when(invoiceRepo.findAll()).thenReturn(all);
 
-    List<Invoice> ret = invoiceService.getInvoiceByCustomerId(1);
+        List<Invoice> ret = invoiceService.getInvoiceByCustomerId(1);
 
-    assertEquals(1, ret.size());
-  }
+        assertEquals(1, ret.size());
+    }
 
-  @Test
-  public void getInvoiceByCustomerId_WhenPresent() {
-    Mockito.when(invoiceRepo.findAll()).thenReturn(all);
+    @Test
+    public void getInvoiceByCustomerId_WhenPresent() {
+        Mockito.when(invoiceRepo.findAll()).thenReturn(all);
 
-    List<Invoice> ret = invoiceService.getInvoiceByCustomerId(4);
+        List<Invoice> ret = invoiceService.getInvoiceByCustomerId(4);
 
-    assertEquals(0, ret.size());
-  }
+        assertEquals(0, ret.size());
+    }
 
-  @Test
-  public void getInvoicesByShopId_Test() {
-    Mockito.when(invoiceRepo.findAllByShopId(4)).thenReturn(all);
+    @Test
+    public void getInvoicesByShopId_Test() {
+        Mockito.when(invoiceRepo.findAllByShopId(4)).thenReturn(all);
 
-    List<Invoice> ret = invoiceService.getInvoicesByShopId(4);
+        List<Invoice> ret = invoiceService.getInvoicesByShopId(4);
 
-    assertNotNull(ret);
-  }
+        assertNotNull(ret);
+    }
 }

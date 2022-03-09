@@ -64,7 +64,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/login",
                 "/register",
                 "/signup",
-                "/signup/shop",
                 "/products",
                 "/shop_products",
                 "/shop_products/search/**"

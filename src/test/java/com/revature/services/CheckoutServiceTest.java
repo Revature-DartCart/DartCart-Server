@@ -1,28 +1,26 @@
 package com.revature.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
 import com.revature.driver.DartCartApplication;
 import com.revature.exceptions.BadTransactionException;
 import com.revature.models.*;
-import com.revature.repositories.CartItemRepository;
-import com.revature.repositories.InvoiceRepository;
+import com.revature.repositories.CartItemRepo;
+import com.revature.repositories.InvoiceRepo;
 import com.revature.repositories.UserRepo;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DartCartApplication.class)
 public class CheckoutServiceTest {
-
     @Autowired
     private CheckoutService checkoutService;
 
@@ -30,24 +28,24 @@ public class CheckoutServiceTest {
     private UserRepo userRepo;
 
     @MockBean
-    private InvoiceRepository invoiceRepository;
+    private InvoiceRepo invoiceRepository;
 
     @MockBean
-    private CartItemRepository cartItemRepository;
+    private CartItemRepo cartItemRepository;
 
     @Test
     public void testUserCheckoutWithValidCart() throws BadTransactionException {
         User user = new User(
-                1,
-                "test1",
-                "password",
-                "Test",
-                "User",
-                "test1@dartcart.net",
-                "123-456-7890",
-                "1 Test Street, Test Town, Testonia 12345",
-                123563672L,
-                new ArrayList<>()
+            1,
+            "test1",
+            "password",
+            "Test",
+            "User",
+            "test1@dartcart.net",
+            "123-456-7890",
+            "1 Test Street, Test Town, Testonia 12345",
+            123563672L,
+            new ArrayList<>()
         );
 
         Shop shop = new Shop(1, "blah", null);
@@ -65,7 +63,15 @@ public class CheckoutServiceTest {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderDetails.add(new OrderDetail(1, 100, "test product", "test description", 3));
         orderDetails.add(new OrderDetail(1, 100, "test2 product", "test2 description", 3));
-        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, orderDetails, shop);
+        Invoice invoice = new Invoice(
+            1,
+            System.currentTimeMillis(),
+            shop.getLocation(),
+            user.getLocation(),
+            user,
+            orderDetails,
+            shop
+        );
 
         // get current cart for confirmation
         when(userRepo.findById(user.getId())).thenReturn(Optional.of(user));
@@ -82,29 +88,29 @@ public class CheckoutServiceTest {
     @Test
     public void testUserCheckoutWithInvalidCart() throws BadTransactionException {
         User user = new User(
-                1,
-                "test1",
-                "password",
-                "Test",
-                "User",
-                "test1@dartcart.net",
-                "123-456-7890",
-                "1 Test Street, Test Town, Testonia 12345",
-                123563672L,
-                new ArrayList<>()
+            1,
+            "test1",
+            "password",
+            "Test",
+            "User",
+            "test1@dartcart.net",
+            "123-456-7890",
+            "1 Test Street, Test Town, Testonia 12345",
+            123563672L,
+            new ArrayList<>()
         );
 
         User realUser = new User(
-                1,
-                "test1",
-                "password",
-                "Test",
-                "User",
-                "test1@dartcart.net",
-                "123-456-7890",
-                "1 Test Street, Test Town, Testonia 12345",
-                123563672L,
-                new ArrayList<>()
+            1,
+            "test1",
+            "password",
+            "Test",
+            "User",
+            "test1@dartcart.net",
+            "123-456-7890",
+            "1 Test Street, Test Town, Testonia 12345",
+            123563672L,
+            new ArrayList<>()
         );
 
         Shop shop = new Shop(1, "blah", null);
@@ -128,16 +134,16 @@ public class CheckoutServiceTest {
     @Test
     public void testMissingUser() throws BadTransactionException {
         User user = new User(
-                1,
-                "test1",
-                "password",
-                "Test",
-                "User",
-                "test1@dartcart.net",
-                "123-456-7890",
-                "1 Test Street, Test Town, Testonia 12345",
-                123563672L,
-                new ArrayList<>()
+            1,
+            "test1",
+            "password",
+            "Test",
+            "User",
+            "test1@dartcart.net",
+            "123-456-7890",
+            "1 Test Street, Test Town, Testonia 12345",
+            123563672L,
+            new ArrayList<>()
         );
 
         when(userRepo.findById(user.getId())).thenReturn(Optional.empty());
@@ -150,16 +156,16 @@ public class CheckoutServiceTest {
     @Test
     public void testBadTransaction() {
         User user = new User(
-                1,
-                "test1",
-                "password",
-                "Test",
-                "User",
-                "test1@dartcart.net",
-                "123-456-7890",
-                "1 Test Street, Test Town, Testonia 12345",
-                123563672L,
-                new ArrayList<>()
+            1,
+            "test1",
+            "password",
+            "Test",
+            "User",
+            "test1@dartcart.net",
+            "123-456-7890",
+            "1 Test Street, Test Town, Testonia 12345",
+            123563672L,
+            new ArrayList<>()
         );
 
         Shop shop = new Shop(1, "blah", null);
@@ -177,7 +183,15 @@ public class CheckoutServiceTest {
         List<OrderDetail> orderDetails = new ArrayList<>();
         orderDetails.add(new OrderDetail(1, 100, "test product", "test description", 3));
         orderDetails.add(new OrderDetail(1, 100, "test2 product", "test2 description", 3));
-        Invoice invoice = new Invoice(1, System.currentTimeMillis(), shop.getLocation(), user.getLocation(), user, orderDetails, shop);
+        Invoice invoice = new Invoice(
+            1,
+            System.currentTimeMillis(),
+            shop.getLocation(),
+            user.getLocation(),
+            user,
+            orderDetails,
+            shop
+        );
 
         // get current cart for confirmation
         when(userRepo.findById(user.getId())).thenReturn(Optional.of(user));

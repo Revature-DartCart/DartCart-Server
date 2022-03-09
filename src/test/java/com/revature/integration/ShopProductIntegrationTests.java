@@ -14,7 +14,6 @@ import org.springframework.test.annotation.DirtiesContext;
 @SpringBootTest(classes = com.revature.driver.DartCartApplication.class)
 @Transactional
 public class ShopProductIntegrationTests {
-
     @Autowired
     private ShopProductRepo shopProductRepository;
 
