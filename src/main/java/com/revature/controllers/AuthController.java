@@ -41,14 +41,14 @@ public class AuthController {
     try {
       Authentication authenticate = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
-          request.getUsername(),
+          request.getUsername().toLowerCase(Locale.ROOT),
           request.getPassword()
         )
       );
 
       User user = (User) authenticate.getPrincipal();
       com.revature.models.User retUser = userService.getUserByUsername(
-        user.getUsername().toLowerCase(Locale.ROOT)
+        user.getUsername()
       );
       retUser.setPassword(null);
 
