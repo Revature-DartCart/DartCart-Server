@@ -11,4 +11,6 @@ public interface ShopService {
   public List<Shop> getAllShops();
   public void updateShop(Shop change);
   public boolean deleteShop(int id);
+
+    Optional<Shop> getShopBySellerId(int parseInt);
 }
