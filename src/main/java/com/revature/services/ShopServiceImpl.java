@@ -14,6 +14,11 @@ public class ShopServiceImpl implements ShopService {
   ShopRepo shopRepo;
 
   @Override
+  public Optional<Shop> getShopBySellerId(int id) {
+    return shopRepo.findBySellerId(id);
+  }
+
+  @Override
   public Shop addShop(Shop shop) {
     return shopRepo.save(shop);
   }

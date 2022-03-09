@@ -9,6 +9,7 @@ import com.revature.services.ShopProductServiceImpl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,19 @@ public class ShopProductController {
       Integer.parseInt(id)
     );
     return new ResponseEntity<>(shops, HttpStatus.OK);
+  }
+
+  @PostMapping(value = "/shop_products", consumes = "application/json", produces = "application/json")
+  public ResponseEntity<ShopProduct> newShopProduct(@RequestBody ShopProduct sp) {
+    try {
+      ShopProduct created = sps.addShopProduct(sp);
+      if (created.getId() != 0) {
+        return new ResponseEntity<>(created, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 }
