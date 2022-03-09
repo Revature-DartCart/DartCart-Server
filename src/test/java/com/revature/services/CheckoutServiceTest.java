@@ -74,7 +74,7 @@ public class CheckoutServiceTest {
         user = checkoutService.checkout(user);
 
         verify(invoiceRepository, times(1)).save(Mockito.any(Invoice.class));
-        verify(cartItemRepository, times(1)).deleteAll();
+        verify(cartItemRepository, times(1)).deleteAll(Mockito.any(List.class));
 
         assertEquals(0, user.getItemList().size());
     }
