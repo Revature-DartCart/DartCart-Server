@@ -41,7 +41,7 @@ public class ShopProductController {
         return new ResponseEntity<>(shops, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/shop_products/{id}", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/shop_products", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ShopProduct> newShopProduct(@RequestBody ShopProduct sp) {
         try {
             ShopProduct created = sps.addShopProduct(sp);
