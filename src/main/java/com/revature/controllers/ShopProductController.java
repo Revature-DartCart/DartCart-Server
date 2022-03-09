@@ -40,9 +40,9 @@ public class ShopProductController {
     return sps.getByProductCategory(name, category);
   }
 
-  @GetMapping("/sellers/{shopProductId}")
+  @GetMapping("/sellers/{Product_id}")
   public ResponseEntity<List<ShopProductResponse>> getAllSellersForProduct(
-    @PathVariable("shopProductId") String id
+    @PathVariable("Product_id") String id
   ) {
     List<ShopProductResponse> shops = sps.getSellersForProduct(
       Integer.parseInt(id)

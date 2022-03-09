@@ -58,16 +58,13 @@ public class ShopProductServiceTest {
     ArrayList<ShopProduct> testList = new ArrayList<>();
     testList.add(mockShopProduct);
     Mockito
-      .when(mockShopProductRepo.findByProduct(mockShopProduct.getProduct()))
-      .thenReturn(testList);
-    Mockito
-      .when(mockShopProductRepo.findById(mockShopProduct.getId()))
-      .thenReturn(Optional.of(mockShopProduct));
+        .when(mockShopProductRepo.findAll())
+        .thenReturn(testList);
 
     Assertions.assertEquals(
       new ShopProductResponse(
         mockShopProduct.getId(),
-        mockShop.getId(),
+        mockShop,
         mockProduct,
         mockShopProduct.getPrice(),
         mockShop.getLocation(),

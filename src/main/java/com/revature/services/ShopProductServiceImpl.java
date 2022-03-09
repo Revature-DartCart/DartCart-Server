@@ -84,26 +84,26 @@ public class ShopProductServiceImpl implements ShopProductService {
 
   @Override
   public List<ShopProductResponse> getSellersForProduct(int id) {
-    List<ShopProduct> allListings = shopProductRepo.findByProduct(
-      shopProductRepo.findById(id).get().getProduct()
-    );
-
+    List<ShopProduct> list = (List<ShopProduct>) shopProductRepo.findAll();
     ArrayList<ShopProductResponse> shopProducts = new ArrayList<>();
 
-    for (ShopProduct s : allListings) {
-      shopProducts.add(
-        new ShopProductResponse(
-          s.getId(),
-          s.getShop().getId(),
-          s.getProduct(),
-          s.getPrice(),
-          s.getShop().getLocation(),
-          s.getDiscount(),
-          s.getQuantity(),
-          s.getShop().getSeller().getDescription()
-        )
-      );
-    }
+    list.stream().forEach(shopProduct -> {
+              if (shopProduct.getProduct().getId() == id) {
+
+          shopProducts.add(new ShopProductResponse(
+                        shopProduct.getId(),
+                        shopProduct.getShop(),
+                        shopProduct.getProduct(),
+                        shopProduct.getPrice(),
+                        shopProduct.getShop().getLocation(),
+                        shopProduct.getDiscount(),
+                        shopProduct.getQuantity(),
+                        shopProduct.getShop().getSeller().getDescription()
+                ));
+              }
+            }
+    );
+
     return shopProducts;
   }
 }
