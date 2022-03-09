@@ -10,42 +10,42 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ShopServiceImpl implements ShopService {
-  @Autowired
-  ShopRepo shopRepo;
+    @Autowired
+    ShopRepo shopRepo;
 
-  @Override
-  public Shop addShop(Shop shop) {
-    return shopRepo.save(shop);
-  }
-
-  @Override
-  public Optional<Shop> getShopById(int id) {
-    return shopRepo.findById(id);
-  }
-
-  @Override
-  public List<Shop> getAllShops() {
-    return (List<Shop>) shopRepo.findAll();
-  }
-
-  @Override
-  public void updateShop(Shop change) {
-    shopRepo.save(change);
-  }
-
-  @Override
-  public boolean deleteShop(int id) {
-    try {
-      shopRepo.deleteById(id);
-      return true;
-    } catch (IllegalArgumentException e) {
-      e.printStackTrace();
-      return false;
+    @Override
+    public Shop addShop(Shop shop) {
+        return shopRepo.save(shop);
     }
-  }
 
-  @Override
-  public Optional<Shop> getShopBySellerId(int id) {
-    return shopRepo.findbySellerId(id);
-  }
+    @Override
+    public Optional<Shop> getShopById(int id) {
+        return shopRepo.findById(id);
+    }
+
+    @Override
+    public List<Shop> getAllShops() {
+        return (List<Shop>) shopRepo.findAll();
+    }
+
+    @Override
+    public void updateShop(Shop change) {
+        shopRepo.save(change);
+    }
+
+    @Override
+    public boolean deleteShop(int id) {
+        try {
+            shopRepo.deleteById(id);
+            return true;
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Optional<Shop> getShopBySellerId(int id) {
+        return shopRepo.findBySellerId(id);
+    }
 }

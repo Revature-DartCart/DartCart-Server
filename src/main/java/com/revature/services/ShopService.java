@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ShopService {
-  public Shop addShop(Shop shop);
-  public Optional<Shop> getShopById(int id);
-  public List<Shop> getAllShops();
-  public void updateShop(Shop change);
-  public boolean deleteShop(int id);
+    public Shop addShop(Shop shop);
+    public Optional<Shop> getShopById(int id);
+    public List<Shop> getAllShops();
+    public void updateShop(Shop change);
+    public boolean deleteShop(int id);
 
     Optional<Shop> getShopBySellerId(int parseInt);
 }
