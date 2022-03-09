@@ -16,21 +16,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "products")
 public class Product {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "product_id")
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private int id;
 
-  private String name;
+    private String name;
 
-  @Column(length = 1000)
-  private String description;
+    @Column(length = 1000)
+    private String description;
 
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(
-    name = "Product_Category",
-    joinColumns = @JoinColumn(name = "product_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id")
-  )
-  private List<Category> categories;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "Product_Category",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 }

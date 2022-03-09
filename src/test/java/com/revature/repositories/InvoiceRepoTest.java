@@ -16,24 +16,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = DartCartApplication.class)
 public class InvoiceRepoTest {
-  @Autowired
-  InvoiceRepo invoiceRepo;
+    @Autowired
+    InvoiceRepo invoiceRepo;
 
-  @ParameterizedTest
-  @ValueSource(ints = { 1, 2 })
-  public void findAllByShopId_WhenPresent(int id) {
-    Iterable<Invoice> output = invoiceRepo.findAllByShopId(id);
-    assertNotNull(output);
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 2 })
+    public void findAllByShopId_WhenPresent(int id) {
+        Iterable<Invoice> output = invoiceRepo.findAllByShopId(id);
+        assertNotNull(output);
 
-    for (Invoice elem : output) {
-      assertEquals(id, elem.getShop().getId());
+        for (Invoice elem : output) {
+            assertEquals(id, elem.getShop().getId());
+        }
     }
-  }
 
-  @ParameterizedTest
-  @ValueSource(ints = { 9000, 9001 })
-  public void findAllByShopId_WhenAbsent(int id) {
-    Iterable<Invoice> output = invoiceRepo.findAllByShopId(id);
-    assertFalse(output.iterator().hasNext());
-  }
+    @ParameterizedTest
+    @ValueSource(ints = { 9000, 9001 })
+    public void findAllByShopId_WhenAbsent(int id) {
+        Iterable<Invoice> output = invoiceRepo.findAllByShopId(id);
+        assertFalse(output.iterator().hasNext());
+    }
 }

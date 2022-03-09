@@ -1,6 +1,8 @@
 package com.revature.unit.services;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.when;
 
 import com.revature.models.Category;
@@ -8,42 +10,33 @@ import com.revature.models.Product;
 import com.revature.repositories.ProductRepo;
 import com.revature.services.ProductService;
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.List;
+import java.util.Optional;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest(classes = com.revature.driver.DartCartApplication.class)
 public class ProductServicesTests {
-  @Autowired
-  ProductService productService;
+    @Autowired
+    ProductService productService;
 
-  @MockBean
-  private ProductRepo productRepository;
+    @MockBean
+    private ProductRepo productRepository;
 
-  @Test
-  public void testGetProductById() {
-    List<Category> categories = new ArrayList<>();
-    categories.add(new Category(1, "Food"));
-    Product p = new Product(
-      1,
-      "Kelloggs Froot Loops",
-      "Delicious frooty flava",
-      categories
-    );
-    when(productRepository.findById(1)).thenReturn(Optional.of(p));
+    @Test
+    public void testGetProductById() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(1, "Food"));
+        Product p = new Product(1, "Kelloggs Froot Loops", "Delicious frooty flava", categories);
+        when(productRepository.findById(1)).thenReturn(Optional.of(p));
 
-    Optional<Product> productOptional = productService.getProductById(1);
-    Product product = productOptional.orElse(new Product());
+        Optional<Product> productOptional = productService.getProductById(1);
+        Product product = productOptional.orElse(new Product());
 
         assertEquals(1, product.getId());
         assertNotEquals(0, product.getId());

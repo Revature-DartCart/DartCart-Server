@@ -15,19 +15,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "order_details")
 public class OrderDetail {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "order_detail_id")
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_detail_id")
+    private int id;
 
-  @Column(updatable = false)
-  private int cost;
+    @Column(updatable = false)
+    private int cost;
 
-  @Column(updatable = false)
-  private String name;
+    @Column(updatable = false)
+    private String name;
 
-  @Column(length = 1000, updatable = false)
-  private String description;
+    @Column(length = 1000, updatable = false)
+    private String description;
 
-  private int quantity;
+    private int quantity;
 }

@@ -18,21 +18,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "shops")
 public class Shop {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "shop_id")
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "shop_id")
+    private int id;
 
-  @NotNull
-  private String location;
+    @NotNull
+    private String location;
 
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "seller_id")
-  private Seller seller;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "seller_id")
+    private Seller seller;
 
-  public Shop(int id) {
-    this.id = id;
-    location = "";
-    seller = new Seller();
-  }
+    public Shop(int id) {
+        this.id = id;
+        location = "";
+        seller = new Seller();
+    }
 }

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SellerRepo extends CrudRepository<Seller, Integer> {
-  Optional<Seller> findByUserId(int userId);
+    Optional<Seller> findByUserId(int userId);
 }

@@ -18,64 +18,45 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(classes = DartCartApplication.class)
 public class ShopProductServiceTest {
-  private final Seller mockSeller = new Seller(
-    1,
-    "name",
-    "test.com",
-    "desc",
-    null
-  );
-  private final Product mockProduct = new Product(1, "apple", "appley", null);
+    private final Seller mockSeller = new Seller(1, "name", "test.com", "desc", null);
+    private final Product mockProduct = new Product(1, "apple", "appley", null);
 
-  private final Shop mockShop = new Shop(1, "Here", mockSeller);
-  private final ShopProduct mockShopProduct = new ShopProduct(
-    1,
-    1,
-    2,
-    0,
-    mockShop,
-    mockProduct
-  );
+    private final Shop mockShop = new Shop(1, "Here", mockSeller);
+    private final ShopProduct mockShopProduct = new ShopProduct(1, 1, 2, 0, mockShop, mockProduct);
 
-  @Autowired
-  private WebApplicationContext webApplicationContext;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-  @MockBean
-  private ShopProductRepo mockShopProductRepo;
+    @MockBean
+    private ShopProductRepo mockShopProductRepo;
 
-  @Autowired
-  private ShopProductServiceImpl mockShopService;
+    @Autowired
+    private ShopProductServiceImpl mockShopService;
 
-  @BeforeEach
-  void setup() {
-    MockMvc mvc = MockMvcBuilders
-      .webAppContextSetup(webApplicationContext)
-      .build();
-  }
+    @BeforeEach
+    void setup() {
+        MockMvc mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
-  @Test
-  void getAllSellersForProductTest() {
-    ArrayList<ShopProduct> testList = new ArrayList<>();
-    testList.add(mockShopProduct);
-    Mockito
-      .when(mockShopProductRepo.findByProduct(mockShopProduct.getProduct()))
-      .thenReturn(testList);
-    Mockito
-      .when(mockShopProductRepo.findById(mockShopProduct.getId()))
-      .thenReturn(Optional.of(mockShopProduct));
+    @Test
+    void getAllSellersForProductTest() {
+        ArrayList<ShopProduct> testList = new ArrayList<>();
+        testList.add(mockShopProduct);
+        Mockito.when(mockShopProductRepo.findByProduct(mockShopProduct.getProduct())).thenReturn(testList);
+        Mockito.when(mockShopProductRepo.findById(mockShopProduct.getId())).thenReturn(Optional.of(mockShopProduct));
 
-    Assertions.assertEquals(
-      new ShopProductResponse(
-        mockShopProduct.getId(),
-        mockShop.getId(),
-        mockProduct,
-        mockShopProduct.getPrice(),
-        mockShop.getLocation(),
-        mockShopProduct.getDiscount(),
-        mockShopProduct.getQuantity(),
-        mockSeller.getDescription()
-      ),
-      mockShopService.getSellersForProduct(mockShopProduct.getId()).get(0)
-    );
-  }
+        Assertions.assertEquals(
+            new ShopProductResponse(
+                mockShopProduct.getId(),
+                mockShop.getId(),
+                mockProduct,
+                mockShopProduct.getPrice(),
+                mockShop.getLocation(),
+                mockShopProduct.getDiscount(),
+                mockShopProduct.getQuantity(),
+                mockSeller.getDescription()
+            ),
+            mockShopService.getSellersForProduct(mockShopProduct.getId()).get(0)
+        );
+    }
 }

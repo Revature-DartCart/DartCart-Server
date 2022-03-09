@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShopProductRepo extends CrudRepository<ShopProduct, Integer> {
-  List<ShopProduct> findByProduct(Product product);
+    List<ShopProduct> findByProduct(Product product);
 }

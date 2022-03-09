@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class InvoiceController {
-  @Autowired
-  InvoiceService invoiceService;
+    @Autowired
+    InvoiceService invoiceService;
 
-  @GetMapping(value = "/invoices/customer/{id}")
-  public List<Invoice> getInvoiceByUsername(@PathVariable("id") String id) {
-    return invoiceService.getInvoiceByCustomerId(Integer.parseInt(id));
-  }
+    @GetMapping(value = "/invoices/customer/{id}")
+    public List<Invoice> getInvoiceByUsername(@PathVariable("id") String id) {
+        return invoiceService.getInvoiceByCustomerId(Integer.parseInt(id));
+    }
 
-  @GetMapping("/invoices/seller/{id}")
-  public List<Invoice> getAllInvoicesBySellerId(@PathVariable("id") String id) {
-    return invoiceService.getAllInvoicesBySellerId(Integer.parseInt(id));
-  }
+    @GetMapping("/invoices/seller/{id}")
+    public List<Invoice> getAllInvoicesBySellerId(@PathVariable("id") String id) {
+        return invoiceService.getAllInvoicesBySellerId(Integer.parseInt(id));
+    }
 
-  @GetMapping("/invoices/shop/{id}")
-  public List<Invoice> getAllInvoicesByShopId(@PathVariable("id") String id) {
-    return invoiceService.getInvoicesByShopId(Integer.parseInt(id));
-  }
+    @GetMapping("/invoices/shop/{id}")
+    public List<Invoice> getAllInvoicesByShopId(@PathVariable("id") String id) {
+        return invoiceService.getInvoicesByShopId(Integer.parseInt(id));
+    }
 }

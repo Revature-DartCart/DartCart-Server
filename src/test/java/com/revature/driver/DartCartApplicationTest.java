@@ -6,6 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DartCartApplicationTest {
 
-  @Test
-  void contextLoads() {}
+    @Test
+    void contextLoads() {}
 }
