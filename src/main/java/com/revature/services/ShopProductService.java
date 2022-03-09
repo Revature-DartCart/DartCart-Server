@@ -31,4 +31,5 @@ public interface ShopProductService {
 
   List<Product> getByProductCategory(String name, String category);
   List<ShopProductResponse> getSellersForProduct(int id);
+  public ShopProduct addShopProduct(ShopProduct sp);
 }

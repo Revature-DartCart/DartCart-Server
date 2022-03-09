@@ -106,4 +106,9 @@ public class ShopProductServiceImpl implements ShopProductService {
 
     return shopProducts;
   }
+
+    @Override
+    public ShopProduct addShopProduct(ShopProduct sp) {
+        return shopProductRepo.save(sp);
+    }
 }
