@@ -1,15 +1,14 @@
 package com.revature.controllers;
 
 import com.revature.models.Shop;
+import com.revature.models.ShopProduct;
 import com.revature.services.ShopService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -30,5 +29,11 @@ public class ShopController {
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping(value = "/shops/{id}")
+    public ResponseEntity<Shop> getShopBySellerId(@PathVariable("id") String id) {
+        Optional<Shop> shop = shopService.getShopBySellerId(Integer.parseInt(id));
+        return ResponseEntity.of(shop);
     }
 }

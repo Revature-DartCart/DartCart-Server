@@ -43,4 +43,9 @@ public class ShopServiceImpl implements ShopService {
             return false;
         }
     }
+
+    @Override
+    public Optional<Shop> getShopBySellerId(int id) {
+        return shopRepo.findBySellerId(id);
+    }
 }

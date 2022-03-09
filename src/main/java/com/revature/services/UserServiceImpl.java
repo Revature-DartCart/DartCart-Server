@@ -3,6 +3,7 @@ package com.revature.services;
 import com.revature.models.User;
 import com.revature.repositories.UserRepo;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     public User addUser(User user) {
         user.setPassword(bCryptEncoder.encode(user.getPassword()));
+        user.setUsername(user.getUsername().toLowerCase(Locale.ROOT));
         return userRepo.save(user);
     }
 

@@ -1,4 +1,3 @@
 package com.revature.exceptions;
 
-public class BadTransactionException extends Exception {
-}
+public class BadTransactionException extends Exception {}
