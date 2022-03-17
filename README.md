@@ -29,17 +29,14 @@ DartCart is an e-commerce web application designed to buy and sell products deve
 
 ## Getting Started
 
-(include git clone command)
-(include all environment setup steps)
+1. Type the following command into a command line utility inside the folder where you want the project to be stored:
+* `git clone https://github.com/Revature-DartCart/DartCart-Server.git`
+2. Open a back-end IDE, and import a Maven Project.
+3. Navigate to the folder where you cloned the repository, and select that folder.
+4. Confirm that the import is successful, and then start the application.
 
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-- All the `code` required to get started
-- Images of what it should look like
+Please reference the Maven file to see what services need to be installed.
 
-## Usage
-
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
 ## Contributors
 
 * Abdul Samad Sadat
