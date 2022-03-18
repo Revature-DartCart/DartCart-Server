@@ -1,0 +1,44 @@
+server:
+  port: 9005
+  servlet:
+    context-path: /
+
+spring:
+  application: 
+    name: dart-cart
+
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://project3server.database.windows.net:1433;databaseName=Project3
+    username: p3admin
+    password: Project3!
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    #<login user to smtp server>
+    username: noreplydartcart@gmail.com
+    #<login password to smtp server>
+    password: RevatureP3pass45
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "beans"
+          - "health"
+          - "info"
+
+com.revature.jwtissuer : localhost
+com.revature.secret : aa2228b097e40541dfb229bacf40f00a81eac92a1b11412c4d678cb99feba0e96187db65b4b28eefd90097aa3b668790189dc1635823b7bb44cc5b4abdc61c37
